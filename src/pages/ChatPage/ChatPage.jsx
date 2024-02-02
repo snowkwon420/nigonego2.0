@@ -21,7 +21,7 @@ function ChatPage() {
           <ChatUserList userId="dummyId325" />
           <ChatUserList userId="dummyId21" />
           <ChatUserList userId="dummyId43" />
-          <ChatUserList userId="dummyId2" />
+          <ChatUserList userId="dummyId2111" />
         </CommonWrapper>
       </BodyGlobal>
 
