@@ -1,3 +1,17 @@
+# nigonego2.0
+
+니고네고2.0 리팩터링 프로젝트
+
+## 목차
+
+1. [프로젝트 소개](#1-리팩터링-소개)<br/>
+2. [프로젝트 기간](#2-리팩터링-기간)<br/>
+3. [프로젝트 설계및 목표](#3-프로젝트-목표)<br/>
+4. [프로젝트 성과](#4-프로젝트-성과)<br/>
+5. [Trouble Shooting](#4-프로젝트-트러블슈팅)<br/>
+
+---
+
 # <img src="https://github.com/FRONTENDSCHOOL5/final-11-NigoNego/assets/117130358/0b43740c-f6f3-45d0-9eca-ac73479205fb" width="28px"/> 니고네고
 
 ## 니고네고
@@ -12,6 +26,7 @@
 <br />
 
 ## 목차
+
 1. [프로젝트 소개](#1-프로젝트-소개)<br/>
 2. [팀원 소개](#2-팀-소개)<br/>
 3. [개발 기간](#3-개발-기간)<br/>
@@ -47,9 +62,6 @@
 |       <img src="https://github.com/FRONTENDSCHOOL5/final-11-NigoNego/assets/117130358/268a60a2-6e87-4d90-93da-a429902ae6c0" width="160" >        |      <img src="https://github.com/FRONTENDSCHOOL5/final-11-NigoNego/assets/117130358/9c83537e-61c0-4115-9eea-5232622b31ec" width="160" >      |      <img src="https://github.com/FRONTENDSCHOOL5/final-11-NigoNego/assets/117130358/177b2b71-2a0d-4890-b81d-7105eec25d3d" width="160" >       |      <img src="https://github.com/FRONTENDSCHOOL5/final-11-NigoNego/assets/117130358/c9b974fa-7164-466b-9c79-74312df6fcf7" width="160">      |
 | <a href="https://github.com/snowkwon420"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/></a><br/> | <a href="https://github.com/kimmming"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/></a><br/> | <a href="https://github.com/Oh5Yeonju"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/></a><br/> | <a href="https://github.com/suconpa"><img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/></a><br/> |
 |                                                                <code>팀원</code>                                                                 |                                                               <code>팀원</code>                                                               |                                                               <code>팀장</code>                                                                |                                                              <code>팀원</code>                                                               |
-
-
-
 
 ### 2. 역할 분담
 
@@ -243,7 +255,6 @@ main - dev - feature[기능]
 | ------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
 | ![splash page](https://github.com/FRONTENDSCHOOL5/final-11-NigoNego/assets/85488522/2495580b-6579-4298-a13f-dce3e0ffe7b6) | ![로그인 페이지](https://github.com/FRONTENDSCHOOL5/final-11-NigoNego/assets/85488522/c04f6554-eddb-430f-bdb1-3300ce7ab1bd) | ![회원가입 최종](https://github.com/FRONTENDSCHOOL5/final-11-NigoNego/assets/85488522/47eda093-4a61-47e8-af7e-89e527955e39) | ![프로필설정](https://github.com/FRONTENDSCHOOL5/final-11-NigoNego/assets/117130358/f5db86de-b67f-461d-b2ae-0bf55fa5d0e0) |
 
-
 ### 주요기능
 
 | 홈피드                                                                                                                     | 게시글 상세                                                                                                                      | 게시글 업로드                                                                                                                       | 유저프로필                                                                                                                      |
@@ -337,4 +348,5 @@ UI는 반응형으로 구현하였지만 화면이 커지면 무한스크롤이 
 ### splash 이미지
 
 https://codepen.io/Keyon/pen/jXjMKj
+
 # nigonego2.0
