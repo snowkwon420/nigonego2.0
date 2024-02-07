@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import Input from '../../components/common/Input/Input';
-import { HeaderUploadNav } from '../../components/common/Header/Header';
-
-import { ReactComponent as BtnImgUpload } from '../../assets/image/BtnImgUpload.svg';
 import { useNavigate } from 'react-router-dom';
-
-// import { HeaderUploadNav } from '../common/Header/Header';
-import { authAtom } from '../../atom/atoms';
 import { useRecoilValue } from 'recoil';
-import BodyGlobal from '../../styles/BodyGlobal';
+import authAtom from '../../atom/authToken';
 
+import FileUploadInput from '../../components/common/Input/FileUploadInput';
+import { HeaderBasicNav } from '../../components/common/Header/Header';
+import Layout from '../../styles/Layout';
+
+import useFetchToken from "../../Hooks/UseFetchToken";
 export default function ProductPage() {
-  const user = 'nigonego';
   const navigate = useNavigate();
 
   const [itemName, setItemName] = useState('');
@@ -21,15 +18,13 @@ export default function ProductPage() {
   const [link, setLink] = useState('');
   const [itemImage, setItemImage] = useState('');
 
-  const auth = useRecoilValue(authAtom);
+  const { postJoinImage, postProductUpload } = useFetchToken();
+
   const [isFormValid, setIsFormValid] = useState(false);
-  // const [isBtnActive, setIsBtnActive] = useState(Boolean(false));
-  console.log(isFormValid);
 
   useEffect(() => {
     if (itemName && price && link && itemImage) {
       setIsFormValid(true);
-      // setIsBtnActive(Boolean(true))
     }
   }, [itemName, price, link, itemImage]);
 
@@ -39,74 +34,43 @@ export default function ProductPage() {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append('image', file);
-    axios({
-      method: 'POST',
-      url: 'https://api.mandarin.weniv.co.kr/image/uploadfile',
-      data: formData,
-    }).then(result => {
-      console.log('요청성공');
-      console.log(result);
-      setItemImage(`https://api.mandarin.weniv.co.kr/${result.data.filename}`);
-    });
+
+    postJoinImage(formData).then(response => {
+      setItemImage(`https://api.mandarin.weniv.co.kr/${response.data.filename}`);
+    })
   };
   function handleSubmit(e) {
     e.preventDefault();
-    // 게시글 작성 api 호출
-    try {
-      axios({
-        method: 'POST',
-        url: `https://api.mandarin.weniv.co.kr/product`,
-        headers: {
-          Authorization: `Bearer ${auth}`,
-          'Content-type': 'application/json',
-        },
 
-        data: {
-          product: {
-            itemName: itemName,
-            price: Number(price), //1원 이상
-            link: link,
-            itemImage: `${itemImage}`,
-          },
-        },
-      }).then(response => {
-        console.log(response);
-        console.log('POST 요청 완료');
-        navigate('/myprofile', {
-          state: { user },
-        });
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    postProductUpload(itemName, price, link, itemImage).then(response => {
+      navigate('/myprofile');
+    });
+
   }
 
   return (
-    <GlobalWrapper>
+    <Layout>
       <form onSubmit={handleSubmit}>
-        <HeaderUploadNav content="업로드" isFormValid={isFormValid} />
+        <HeaderBasicNav disabled={!isFormValid}>업로드</HeaderBasicNav>
 
         <ul>
           <li>
             <p className="title">이미지 등록</p>
             <ImgUploadWrapp>
-              <label htmlFor="input">
-                <BtnImgUpload
-                  width="34px"
-                  height="34px"
-                  fill="#c4c4c4"
-                  stroke="#fff"
-                />
-              </label>
-              <input id="input" type="file" onChange={handleImageUpload} />
+              <FileUploadInput
+                id="input"
+                type="file"
+                onChange={handleImageUpload}
+              />
+              <Input id="input" type="file" onChange={handleImageUpload} />
               {itemImage.length > 0 && (
                 <img src={itemImage} alt="" style={{ borderRadius: '10px' }} />
               )}
             </ImgUploadWrapp>
           </li>
           <li>
-            <label className="title">상품명</label>
             <Input
+              label="상품명"
               value={itemName}
               placeholder="2~10자 이내여야 합니다."
               onChange={e => {
@@ -115,8 +79,8 @@ export default function ProductPage() {
             />
           </li>
           <li>
-            <label className="title">가격</label>
             <Input
+              label="가격"
               placeholder="숫자만 입력 가능합니다."
               value={price}
               onChange={e => {
@@ -125,8 +89,8 @@ export default function ProductPage() {
             />
           </li>
           <li>
-            <label className="title">판매링크</label>
             <Input
+              label="판매링크"
               placeholder="URL을 입력해 주세요."
               value={link}
               onChange={e => {
@@ -136,7 +100,7 @@ export default function ProductPage() {
           </li>
         </ul>
       </form>
-    </GlobalWrapper>
+    </Layout>
   );
 }
 

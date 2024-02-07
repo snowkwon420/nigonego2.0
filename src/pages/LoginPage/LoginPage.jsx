@@ -3,10 +3,15 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
-import { LBtn, LdisabledBtn } from '../../components/common/button/Button';
 import Input from '../../components/common/Input/Input';
-import { authAtom, accountNameAtom, followingAtom } from '../../atom/atoms';
+import { followingAtom } from '../../atom/atoms';
+import authAtom from '../../atom/authToken';
+import accountNameAtom from '../../atom/accountName';
 import MainWrapperF from '../../styles/MainGlobal';
+import LoginApi from '../../api/getData/LoginApi';
+import { ButtonLong } from '../../components/common/button/Button';
+import Layout from '../../styles/Layout';
+import UseFetchToken from '../../Hooks/UseFetchToken';
 
 function LoginPage() {
   const [email, setEmail] = useState('');
@@ -17,11 +22,12 @@ function LoginPage() {
   const [loginErrMessage, setLoginErrMessage] = useState('');
   const [isCorrect, setIsCorrect] = useState(null);
   const navigate = useNavigate();
-
   const [auth, setAuth] = useRecoilState(authAtom);
   const [accountname, setAccountname] = useRecoilState(accountNameAtom);
   const [following, setFollowing] = useRecoilState(followingAtom);
+  const { postLogin, getUserInfo } = UseFetchToken();
 
+  //이메일 검증 시작
   function emailCheck(event) {
     setEmail(event.target.value);
     const testEmail =
@@ -35,7 +41,9 @@ function LoginPage() {
       setIsEmailValid(false);
     }
   }
+  //이메일 검증 끝
 
+  //패스워드 validation 시작
   function passwordCheck(event) {
     setPassword(event.target.value);
     const testPassword = /^[A-Za-z0-9]{5,20}$/;
@@ -45,66 +53,36 @@ function LoginPage() {
       setIsPasswordValid(false);
     }
   }
+  //패스워드 validataion 끝
 
-  const url = 'https://api.mandarin.weniv.co.kr';
-
+  //여기서 then 과 await의 차이점이 뭔지 모르고 사용했음
+  //submit 버튼 시작//
   async function onhandlesubmit(event) {
     event.preventDefault();
-    try {
-      const res = await axios.post(
-        `${url}/user/login`,
-        {
-          user: {
-            email,
-            password,
-          },
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        },
-      );
-      // const successRes = res.data;
-      console.log(res.data);
-      if (res.data.user) {
-        const { token, accountname } = res.data.user;
-        console.log(res.data.user.email);
-        setAuth(token);
-        setAccountname(accountname);
-        await FollowingData(token);
-      } else if (res.data.status === 422) {
-        setIsCorrect(false);
-        setLoginErrMessage('*이메일 또는 비밀번호가 일치하지 않습니다.');
-      }
-    } catch (error) {
-      // 요청이 실패한 경우
-      console.error(error);
-    }
+    await submitHandler();
   }
+  //submit 버튼 끝//
 
-  async function FollowingData(token) {
-    try {
-      const res = await axios.get(`${url}/user/myinfo`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const { following } = res.data.user;
-      setFollowing(following);
-      if (Object.keys(following).length === 0) {
-        navigate('/home');
-      } else {
-        navigate('/homefeed');
-      }
-    } catch (error) {
-      console.error(error);
+  //postLogin 요청 시작//
+  const submitHandler = async () => {
+    const res = await postLogin({ user: { email: email, password: password } });
+    if (res.data.user) {
+      const { token, accountname } = res.data.user;
+      console.log(res.data.user.email);
+      setAuth(token);
+      setAccountname(accountname);
+      console.log(auth);
+      navigate('/homefeed');
+    } else if (res.data.status === 422) {
+      setIsCorrect(false);
+      setLoginErrMessage('*이메일 또는 비밀번호가 일치하지 않습니다.');
     }
-  }
+  };
+  //postLogin 요청 끝//
 
   return (
-    <MainWrapperF>
-      <Wrapper>
+    <Layout>
+      <MainWrapperF>
         <h1>로그인</h1>
         <form onSubmit={onhandlesubmit}>
           <FormWrapper>
@@ -129,18 +107,31 @@ function LoginPage() {
               errorMessage={loginErrMessage}
             />
 
-            {isEmailValid && isPasswordValid ? (
+            {/* {isEmailValid && isPasswordValid ? (
               <LBtn type="submit" content="로그인" />
             ) : (
               <LdisabledBtn content="로그인" />
+            )} */}
+
+            {isEmailValid && isPasswordValid ? (
+              <ButtonLong type="submit" disabled={false}>
+                로그인
+              </ButtonLong>
+            ) : (
+              <ButtonLong
+                disabled={true}
+                backgroundColor={'var(--light-yellow)'}
+              >
+                로그인
+              </ButtonLong>
             )}
           </FormWrapper>
         </form>
         <LinkWrapper>
           <Link to="/join">이메일로 회원가입</Link>
         </LinkWrapper>
-      </Wrapper>
-    </MainWrapperF>
+      </MainWrapperF>
+    </Layout>
   );
 }
 

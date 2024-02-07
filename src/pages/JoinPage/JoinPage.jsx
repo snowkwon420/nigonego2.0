@@ -3,10 +3,12 @@ import React, { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { LBtn, LdisabledBtn } from '../../components/common/button/Button';
+import { ButtonLong } from '../../components/common/button/Button';
 import Input from '../../components/common/Input/Input';
 import { Wrapper, FormWrapper } from '../LoginPage/LoginPage';
 import MainWrapperF from '../../styles/MainGlobal';
+import Layout from "../../styles/Layout";
+import UseFetchToken from '../../Hooks/UseFetchToken';
 
 const ButtonWrapper = styled.div`
   margin-top: 30px;
@@ -22,6 +24,7 @@ function JoinPage() {
   const [errorMessagePW, setErrorMessagePW] = useState('');
   const [isEmailPossible, setIsEmailPossible] = useState('');
   const navigate = useNavigate();
+  const { postJoin } = UseFetchToken();
 
   function emailCheck(event) {
     const testEmail =
@@ -70,18 +73,19 @@ function JoinPage() {
     passwordCheck(event);
   }, []);
 
-  async function onhandlesubmit(event) {
-    event.preventDefault();
+  async function onhandlesubmit() {
     // if (!isEmailValid || !isPasswordValid) return;
 
     try {
-      const url = 'https://api.mandarin.weniv.co.kr';
+      // const url = 'https://api.mandarin.weniv.co.kr';
 
-      const res = await axios.post(`${url}/user/emailvalid`, {
-        user: {
-          email,
-        },
-      });
+      // const res = await axios.post(`${url}/user/emailvalid`, {
+      //   user: {
+      //     email,
+      //   },
+      // });
+
+      const res = await postJoin({ user: { email } });
       console.log('res', res.data);
       if (res.data.message === '이미 가입된 이메일 주소 입니다.') {
         setIsEmailPossible(false);
@@ -100,11 +104,17 @@ function JoinPage() {
     }
   }
 
+  function handleSubmit(e) {
+    // handle submit
+    e.preventDefault();
+    onhandlesubmit();
+  }
+
   return (
+      <Layout>
     <MainWrapperF>
-      <Wrapper>
         <h1>회원가입 페이지</h1>
-        <form onSubmit={onhandlesubmit}>
+        <form onSubmit={handleSubmit}>
           <FormWrapper>
             <Input
               label="이메일"
@@ -132,16 +142,21 @@ function JoinPage() {
               errorMessage={errorMessagePW}
             />
             <ButtonWrapper>
-              {isEmailValid && isPasswordValid ? (
+              {/* {isEmailValid && isPasswordValid ? (
                 <LBtn type="submit" content="다음" />
               ) : (
                 <LdisabledBtn content="다음" h="32" />
+              )} */}
+              {isEmailValid && isPasswordValid ? (
+                <ButtonLong type="submit">다음</ButtonLong>
+              ) : (
+                <ButtonLong disabled={true}>다음</ButtonLong>
               )}
             </ButtonWrapper>
           </FormWrapper>
         </form>
-      </Wrapper>
     </MainWrapperF>
+      </Layout>
   );
 }
 

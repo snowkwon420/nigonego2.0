@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import msg from '../../assets/icons/message-icon.svg';
-import like from '../../assets/icons/like-icon.svg';
-import axios from 'axios';
-import UserSearch from '../common/User/UserSearch';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import MyHomePost from './MyHomePost';
+import atomYourAccount from '../../atom/atomYourAccount';
+import { useEffect } from 'react';
 
-export default function YourHomePost({ accountname }) {
-  return <MyHomePost accountname={accountname} />;
+export default function YourHomePost({ accountName }) {
+  console.log(accountName);
+  return <MyHomePost accountName={accountName} />;
 }
