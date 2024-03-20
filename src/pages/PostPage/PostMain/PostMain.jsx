@@ -9,7 +9,7 @@ import CommentPost from '../../../components/common/Comment/CommentPost/CommentP
 import { useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import authAtom from '../../../atom/authToken';
-import useFetchToken from "../../../Hooks/UseFetchToken";
+import useFetchToken from '../../../Hooks/UseFetchToken';
 import Layout from '../../../styles/Layout';
 
 function PostMain() {
@@ -24,10 +24,9 @@ function PostMain() {
   const { getUserData, getCommentData } = useFetchToken();
 
   useEffect(() => {
-    if(postId && commentData) {
+    if (postId && commentData) {
       getData();
       getComment();
-
     }
   }, [postId, commentData]);
 
@@ -36,7 +35,7 @@ function PostMain() {
   // }, []);
   //post 데이터 요청
   const getData = () => {
-    getUserData(postId).then((response) => {
+    getUserData(postId).then(response => {
       console.log(response);
       setPostData(response.data.post);
     });

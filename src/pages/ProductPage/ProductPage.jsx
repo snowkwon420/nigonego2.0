@@ -9,7 +9,7 @@ import FileUploadInput from '../../components/common/Input/FileUploadInput';
 import { HeaderBasicNav } from '../../components/common/Header/Header';
 import Layout from '../../styles/Layout';
 
-import useFetchToken from "../../Hooks/UseFetchToken";
+import useFetchToken from '../../Hooks/UseFetchToken';
 export default function ProductPage() {
   const navigate = useNavigate();
 
@@ -36,16 +36,18 @@ export default function ProductPage() {
     formData.append('image', file);
 
     postJoinImage(formData).then(response => {
-      setItemImage(`https://api.mandarin.weniv.co.kr/${response.data.filename}`);
-    })
+      setItemImage(
+        `https://api.mandarin.weniv.co.kr/${response.data.filename}`,
+      );
+    });
   };
+
   function handleSubmit(e) {
     e.preventDefault();
 
     postProductUpload(itemName, price, link, itemImage).then(response => {
       navigate('/myprofile');
     });
-
   }
 
   return (

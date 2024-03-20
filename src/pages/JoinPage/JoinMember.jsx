@@ -206,7 +206,6 @@ export default function JoinMember() {
         </form>
       </MainWrapperF>
     </Layout>
-
   );
 }
 

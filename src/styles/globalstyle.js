@@ -47,7 +47,10 @@ const globalStyle = createGlobalStyle`
     text-decoration: none;
     color: inherit;
   }
-
+  h1{
+    margin:0;
+    padding:0;
+  }
   .body-wrapper {
     margin: 4.8rem 10px 0px 10px;
     /* box-shadow: inset 0px 0px 3px 1px rgb(0, 38, 255); */

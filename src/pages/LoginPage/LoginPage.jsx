@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import Input from '../../components/common/Input/Input';
 import { followingAtom } from '../../atom/atoms';
 import authAtom from '../../atom/authToken';
 import accountNameAtom from '../../atom/accountName';
 import MainWrapperF from '../../styles/MainGlobal';
-import LoginApi from '../../api/getData/LoginApi';
 import { ButtonLong } from '../../components/common/button/Button';
 import Layout from '../../styles/Layout';
 import UseFetchToken from '../../Hooks/UseFetchToken';
@@ -68,10 +66,8 @@ function LoginPage() {
     const res = await postLogin({ user: { email: email, password: password } });
     if (res.data.user) {
       const { token, accountname } = res.data.user;
-      console.log(res.data.user.email);
       setAuth(token);
       setAccountname(accountname);
-      console.log(auth);
       navigate('/homefeed');
     } else if (res.data.status === 422) {
       setIsCorrect(false);
@@ -81,57 +77,50 @@ function LoginPage() {
   //postLogin 요청 끝//
 
   return (
-    <Layout>
-      <MainWrapperF>
-        <h1>로그인</h1>
-        <form onSubmit={onhandlesubmit}>
-          <FormWrapper>
-            <Input
-              label="이메일"
-              type="email"
-              id="user-email"
-              name="user-email"
-              placeholder=""
-              value={email}
-              onChange={event => emailCheck(event)}
-            />
-            <Input
-              label="비밀번호"
-              type="password"
-              id="user-password"
-              name="user-password"
-              placeholder=""
-              value={password}
-              onChange={event => passwordCheck(event)}
-              isCorrect={isCorrect}
-              errorMessage={loginErrMessage}
-            />
+    <MainWrapperF>
+      <h1>로그인</h1>
+      <FormWrapper onSubmit={onhandlesubmit}>
+        <Input
+          label="이메일"
+          type="email"
+          id="user-email"
+          name="user-email"
+          placeholder=""
+          value={email}
+          onChange={event => emailCheck(event)}
+        />
+        <Input
+          label="비밀번호"
+          type="password"
+          id="user-password"
+          name="user-password"
+          placeholder=""
+          value={password}
+          onChange={event => passwordCheck(event)}
+          isCorrect={isCorrect}
+          errorMessage={loginErrMessage}
+        />
 
-            {/* {isEmailValid && isPasswordValid ? (
+        {/* {isEmailValid && isPasswordValid ? (
               <LBtn type="submit" content="로그인" />
             ) : (
               <LdisabledBtn content="로그인" />
             )} */}
 
-            {isEmailValid && isPasswordValid ? (
-              <ButtonLong type="submit" disabled={false}>
-                로그인
-              </ButtonLong>
-            ) : (
-              <ButtonLong
-                disabled={true}
-                backgroundColor={'var(--light-yellow)'}
-              >
-                로그인
-              </ButtonLong>
-            )}
-          </FormWrapper>
-        </form>
-        <LinkWrapper>
-          <Link to="/join">이메일로 회원가입</Link>
-        </LinkWrapper>
-      </MainWrapperF>
-    </Layout>
+        {isEmailValid && isPasswordValid ? (
+          <ButtonLong type="submit" disabled={false}>
+            로그인
+          </ButtonLong>
+        ) : (
+          <ButtonLong disabled={true} backgroundColor={'var(--light-yellow)'}>
+            로그인
+          </ButtonLong>
+        )}
+      </FormWrapper>
+      <LinkWrapper>
+        <Link to="/join">이메일로 회원가입</Link>
+      </LinkWrapper>
+    </MainWrapperF>
   );
 }
 
@@ -148,7 +137,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const FormWrapper = styled.div`
+export const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   gap: 18px;
