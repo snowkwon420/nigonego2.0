@@ -19,11 +19,13 @@ function LoginPage() {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [loginErrMessage, setLoginErrMessage] = useState('');
   const [isCorrect, setIsCorrect] = useState(null);
-  const navigate = useNavigate();
+
   const [auth, setAuth] = useRecoilState(authAtom);
   const [accountname, setAccountname] = useRecoilState(accountNameAtom);
   const [following, setFollowing] = useRecoilState(followingAtom);
   const { postLogin, getUserInfo } = UseFetchToken();
+
+  const navigate = useNavigate();
 
   //이메일 검증 시작
   function emailCheck(event) {
@@ -77,7 +79,7 @@ function LoginPage() {
   //postLogin 요청 끝//
 
   return (
-    <MainWrapperF>
+    <Wrapper>
       <h1>로그인</h1>
       <FormWrapper onSubmit={onhandlesubmit}>
         <Input
@@ -100,13 +102,6 @@ function LoginPage() {
           isCorrect={isCorrect}
           errorMessage={loginErrMessage}
         />
-
-        {/* {isEmailValid && isPasswordValid ? (
-              <LBtn type="submit" content="로그인" />
-            ) : (
-              <LdisabledBtn content="로그인" />
-            )} */}
-
         {isEmailValid && isPasswordValid ? (
           <ButtonLong type="submit" disabled={false}>
             로그인
@@ -120,7 +115,7 @@ function LoginPage() {
       <LinkWrapper>
         <Link to="/join">이메일로 회원가입</Link>
       </LinkWrapper>
-    </MainWrapperF>
+    </Wrapper>
   );
 }
 
@@ -129,6 +124,7 @@ export default LoginPage;
 export const Wrapper = styled.div`
   width: 80%;
   margin: 0px auto;
+  margin-top: 50px;
   display: flex;
   flex-direction: column;
 
@@ -140,6 +136,7 @@ export const Wrapper = styled.div`
 export const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
   gap: 18px;
   text-align: center;
   color: var(--basic-grey);

@@ -6,11 +6,6 @@ import kakaoIcon from '../../assets/icons/kakao.png';
 import googleIcon from '../../assets/icons/google.png';
 import facebookIcon from '../../assets/icons/facebook.png';
 
-const Wrapper = styled.div`
-  height: 100vh;
-  color: #767676;
-`;
-
 const Logo = styled.section`
   width: 100%;
   height: 60%;
@@ -81,11 +76,4 @@ const FacebookBtnLogin = styled(BtnLogin)`
   }
 `;
 
-export {
-  Wrapper,
-  Logo,
-  LoginSelect,
-  KakaoBtnLogin,
-  FacebookBtnLogin,
-  GoogleBtnLogin,
-};
+export { Logo, LoginSelect, KakaoBtnLogin, FacebookBtnLogin, GoogleBtnLogin };
