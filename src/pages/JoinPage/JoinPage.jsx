@@ -1,13 +1,8 @@
 import React, { useState, useCallback } from 'react';
-// import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ButtonLong } from '../../components/common/button/Button';
 import Input from '../../components/common/Input/Input';
 import { FormWrapper, Wrapper } from '../LoginPage/LoginPage';
-import MainWrapperF from '../../styles/MainGlobal';
-import Layout from '../../styles/Layout';
 import UseFetchToken from '../../Hooks/UseFetchToken';
 
 function JoinPage() {
@@ -130,7 +125,7 @@ function JoinPage() {
           name="user-password"
           placeholder="비밀번호를 설정해 주세요."
           value={password}
-          onChange={event => setPassword(event.target.value)}
+          onChange={event => setPassword}
           onBlur={handlePasswordBlur}
           isCorrect={isPasswordValid}
           errorMessage={errorMessagePW}

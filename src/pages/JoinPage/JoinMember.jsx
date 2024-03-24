@@ -9,7 +9,7 @@ import { LImage } from '../../components/common/UserImage/UserImage';
 import MainWrapperF from '../../styles/MainGlobal';
 import styled from 'styled-components';
 import UseFetchToken from '../../Hooks/UseFetchToken';
-import Layout from '../../styles/Layout';
+import { Wrapper } from '../LoginPage/LoginPage';
 
 export default function JoinMember() {
   const [userName, setUserName] = useState('');
@@ -137,81 +137,73 @@ export default function JoinMember() {
   };
 
   return (
-    <Layout>
-      <MainWrapperF>
-        <HeadingWrapper>
-          <h1>프로필 설정</h1>
-          <p>나중에 언제든지 변경할 수 있습니다.</p>
-        </HeadingWrapper>
+    <Wrapper>
+      <HeadingWrapper>
+        <h1>프로필 설정</h1>
+        <p>나중에 언제든지 변경할 수 있습니다.</p>
+      </HeadingWrapper>
 
-        <FileUploadWrapper>
-          <LImage backgroundUrl={userImage} />
-          <FileUploadInput
-            backgroundUrl={userImage}
-            id="input"
-            type="file"
-            onChange={handleImageUpload}
-          />
-        </FileUploadWrapper>
-
-        <form onSubmit={submitHandler}>
-          <FormWrapper>
-            <Input
-              label="사용자이름"
-              type="text"
-              id="user-name"
-              name="user-name"
-              placeholder="2~10자 이내"
-              value={userName}
-              onChange={handleUserNameChange}
-              onBlur={handleNameValid}
+      <FileUploadWrapper>
+        <LImage backgroundUrl={userImage} />
+        <FileUploadInput
+          backgroundUrl={userImage}
+          id="input"
+          type="file"
+          onChange={handleImageUpload}
+        />
+      </FileUploadWrapper>
+      <FormWrapper onSubmit={submitHandler}>
+        <Input
+          label="사용자이름"
+          type="text"
+          id="user-name"
+          name="user-name"
+          placeholder="2~10자 이내"
+          value={userName}
+          onChange={handleUserNameChange}
+          onBlur={handleNameValid}
+        />
+        <Input
+          label="계정ID"
+          type="text"
+          id="user-ID"
+          name="user-ID"
+          placeholder="영문, 숫자 특수문자만 사용가능"
+          value={userID}
+          onChange={handleUserIDChange}
+          onBlur={idValidHandler}
+          errorMessage={errorMessageID}
+        />
+        <Input
+          label="소개"
+          type="text"
+          id="user-intro"
+          name="user-intro"
+          value={userIntro}
+          onChange={handleUserIntro}
+          placeholder="자신과 판매할 상품에 대해 소개"
+        />
+        <BtnWrapper>
+          {/* 버튼수정 필요함 */}
+          {isFormValid ? (
+            <ButtonLong
+              type="submit"
+              children="니고네고 시작하기"
+              disabled={false}
             />
-            <Input
-              label="계정ID"
-              type="text"
-              id="user-ID"
-              name="user-ID"
-              placeholder="영문, 숫자 특수문자만 사용가능"
-              value={userID}
-              onChange={handleUserIDChange}
-              onBlur={idValidHandler}
-              errorMessage={errorMessageID}
+          ) : (
+            <ButtonLong
+              type="submit"
+              children="니고네고 시작하기"
+              disabled={true}
             />
-            <Input
-              label="소개"
-              type="text"
-              id="user-intro"
-              name="user-intro"
-              value={userIntro}
-              onChange={handleUserIntro}
-              placeholder="자신과 판매할 상품에 대해 소개"
-            />
-            <BtnWrapper>
-              {/* 버튼수정 필요함 */}
-              {isFormValid ? (
-                <ButtonLong
-                  type="submit"
-                  children="니고네고 시작하기"
-                  disabled={false}
-                />
-              ) : (
-                <ButtonLong
-                  type="submit"
-                  children="니고네고 시작하기"
-                  disabled={true}
-                />
-              )}
-            </BtnWrapper>
-          </FormWrapper>
-        </form>
-      </MainWrapperF>
-    </Layout>
+          )}
+        </BtnWrapper>
+      </FormWrapper>
+    </Wrapper>
   );
 }
 
-const Wrapper = styled.div`
-  flex-direction: column;
-`;
 const HeadingWrapper = styled.div`
   text-align: center;
 `;
