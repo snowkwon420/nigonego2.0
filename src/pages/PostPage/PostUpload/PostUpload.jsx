@@ -10,8 +10,8 @@ import BodyGlobal from '../../../styles/BodyGlobal';
 import authAtom from '../../../atom/authToken';
 import Layout from '../../../styles/Layout';
 import FileUploadInput from '../../../components/common/Input/FileUploadInput';
-import useFetchToken from "../../../Hooks/UseFetchToken";
-import UserProfileCircle from "../../../components/common/User/UserProfileCircle";
+import useFetchToken from '../../../Hooks/UseFetchToken';
+import UserProfileCircle from '../../../components/common/User/UserProfileCircle';
 export default function PostUpload() {
   const navigate = useNavigate();
   const user = 'nigonego';
@@ -29,7 +29,6 @@ export default function PostUpload() {
 
   useEffect(() => {
     if (content && image) {
-
       setIsFormValid(true);
     }
   }, [content, image]);
@@ -52,16 +51,15 @@ export default function PostUpload() {
     postPostUpload(content, image).then(response => {
       navigate('/myprofile');
     });
-
   };
 
   return (
-    <Layout>
+    <>
       <HeaderBasicNav disabled={!isFormValid}>업로드</HeaderBasicNav>
       <form onSubmit={handleSubmit}>
         <BodyGlobal>
           <PostUploadWrapper>
-            <UserProfileCircle isWidth="48px"/>
+            <UserProfileCircle isWidth="48px" />
             <textarea
               className="inputPost"
               placeholder="게시글 입력하기"
@@ -80,7 +78,7 @@ export default function PostUpload() {
         right="20px"
         bottom="20px"
       />
-    </Layout>
+    </>
   );
 }
 
@@ -89,7 +87,7 @@ const PostUploadWrapper = styled.div`
   margin-top: 10px;
   display: flex;
   justify-content: space-between;
-  
+
   textarea {
     border: none;
     width: calc(100% - 60px);
@@ -98,8 +96,8 @@ const PostUploadWrapper = styled.div`
     box-sizing: border-box;
     line-height: 1.2em;
     white-space: pre-wrap;
+  }
 `;
-
 
 const UploadImg = styled.img`
   margin-top: 10px;
