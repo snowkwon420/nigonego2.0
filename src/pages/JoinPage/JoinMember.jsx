@@ -183,22 +183,21 @@ export default function JoinMember() {
           onChange={handleUserIntro}
           placeholder="자신과 판매할 상품에 대해 소개"
         />
-        <BtnWrapper>
-          {/* 버튼수정 필요함 */}
-          {isFormValid ? (
-            <ButtonLong
-              type="submit"
-              children="니고네고 시작하기"
-              disabled={false}
-            />
-          ) : (
-            <ButtonLong
-              type="submit"
-              children="니고네고 시작하기"
-              disabled={true}
-            />
-          )}
-        </BtnWrapper>
+
+        {/* 버튼수정 필요함 */}
+        {isFormValid ? (
+          <ButtonLong
+            type="submit"
+            children="니고네고 시작하기"
+            disabled={false}
+          />
+        ) : (
+          <ButtonLong
+            type="submit"
+            children="니고네고 시작하기"
+            disabled={true}
+          />
+        )}
       </FormWrapper>
     </Wrapper>
   );
