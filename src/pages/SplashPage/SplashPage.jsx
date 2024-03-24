@@ -106,7 +106,7 @@ const StyleSplashPage = styled.main`
 
   .lego {
     width: 150px;
-    height: 150px;
+    height: 100px;
     position: fixed;
     left: calc(50vw - 75px);
     top: calc(50vh - 100px);
