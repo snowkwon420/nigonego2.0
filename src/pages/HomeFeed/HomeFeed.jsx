@@ -50,8 +50,9 @@ function HomeFeed(props) {
       }
     };
   }, [userData]);
+
   return (
-    <Layout>
+    <>
       <HeaderBasicNav />
       <MyHomePostwarpper ref={postListRef} className="myHomePost">
         {userData.length > 0 ? (
@@ -61,7 +62,7 @@ function HomeFeed(props) {
         )}
       </MyHomePostwarpper>
       <Navbar homeV={false} chatV={true} postV={true} profileV={true} />
-    </Layout>
+    </>
   );
 }
 

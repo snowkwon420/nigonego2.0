@@ -5,15 +5,15 @@ import Navbar from '../../components/common/Navbar/Navbar';
 import { ButtonMiddle } from '../../components/common/button/Button';
 import { ReactComponent as LogoColorImg } from '../../assets/image/LogoColorImg.svg';
 import { useNavigate } from 'react-router-dom';
-import Layout from "../../styles/Layout";
+import Layout from '../../styles/Layout';
 
 function HomePage() {
   return (
-    <Layout>
-      <HeaderMainNav content={'니고네고 피드'} />
+    <>
+      {/* <HeaderMainNav content={'니고네고 피드'} /> */}
       <HomeBlank />
       <Navbar homeV={false} chatV={true} postV={true} profileV={true} />
-    </Layout>
+    </>
   );
 }
 // localstorage.getItem으로 가져오기 token
@@ -27,7 +27,6 @@ function HomeBlank() {
     <ContentWrapper>
       <LogoColorImg width="160px" height="160px" />
       <p>유저를 검색해 팔로우 해보세요.</p>
-
       {/* <ButtonMiddle h="44" content="검색" onClick={handleButtonClick} /> */}
       <ButtonMiddle onClick={handleButtonClick}>검색</ButtonMiddle>
     </ContentWrapper>

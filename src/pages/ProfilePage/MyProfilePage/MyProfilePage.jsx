@@ -38,7 +38,7 @@ export default function MyProfilePage() {
   };
 
   return (
-    <Layout>
+    <>
       <HeaderBasicNav />
       <BodyGlobal>
         <ProfileHeader myData={userData} />
@@ -68,7 +68,7 @@ export default function MyProfilePage() {
         {isClickedGrid && <HomePostGrid />}
       </BodyGlobal>
       <Navbar homeV={true} chatV={true} postV={true} profileV={false} />
-    </Layout>
+    </>
   );
 }
 

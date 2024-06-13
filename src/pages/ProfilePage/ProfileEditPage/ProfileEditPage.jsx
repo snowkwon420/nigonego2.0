@@ -144,7 +144,7 @@ export default function ProfileEditPage() {
   };
 
   return (
-    <Layout>
+    <>
       <HeaderEditdNav
         content="저장"
         isFormValid={isFormValid}
@@ -199,6 +199,6 @@ export default function ProfileEditPage() {
           </FormWrapper>
         </form>
       </BodyGlobal>
-    </Layout>
+    </>
   );
 }
