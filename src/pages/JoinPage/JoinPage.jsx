@@ -8,7 +8,6 @@ import UseFetchToken from '../../Hooks/UseFetchToken';
 function JoinPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const [isEmailValid, setIsEmailValid] = useState(null);
   const [isPasswordValid, setIsPasswordValid] = useState(null);
   const [errorMessageEM, setErrorMessageEM] = useState('');
@@ -28,7 +27,6 @@ function JoinPage() {
     } else if (testEmail) {
       setIsEmailValid(true);
       setErrorMessageEM('');
-
       console.log('이메일 통과');
       // 여기에 원래 있는 이메일이 있는지 유효성 검사기능추가!!
     } else {
@@ -125,7 +123,7 @@ function JoinPage() {
           name="user-password"
           placeholder="비밀번호를 설정해 주세요."
           value={password}
-          onChange={event => setPassword}
+          onChange={event => setPassword(event.target.value)}
           onBlur={handlePasswordBlur}
           isCorrect={isPasswordValid}
           errorMessage={errorMessagePW}
