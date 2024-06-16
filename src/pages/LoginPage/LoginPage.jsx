@@ -16,7 +16,9 @@ function LoginPage() {
   const [password, setPassword] = useState('');
 
   const [isEmailValid, setIsEmailValid] = useState(false);
+  const [emailErrMsg, setEmailErrMsg] = useState('');
   const [isPasswordValid, setIsPasswordValid] = useState(false);
+  const [pwErrMsg, setPwErrMsg] = useState('');
   const [loginErrMessage, setLoginErrMessage] = useState('');
   const [isCorrect, setIsCorrect] = useState(null);
 
@@ -34,11 +36,16 @@ function LoginPage() {
       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(
         event.target.value,
       );
-
-    if (testEmail) {
-      setIsEmailValid(true);
+    if (event.target.value == '') {
+      setEmailErrMsg('');
     } else {
-      setIsEmailValid(false);
+      if (testEmail) {
+        setIsEmailValid(true);
+        setEmailErrMsg('');
+      } else {
+        setIsEmailValid(false);
+        setEmailErrMsg('올바르지 않은 이메일 형식입니다.');
+      }
     }
   }
   //이메일 검증 끝
@@ -47,10 +54,16 @@ function LoginPage() {
   function passwordCheck(event) {
     setPassword(event.target.value);
     const testPassword = /^[A-Za-z0-9]{5,20}$/;
-    if (password !== '' && password.match(testPassword)) {
-      setIsPasswordValid(true);
+    if (event.target.value === '') {
+      setPwErrMsg('');
     } else {
-      setIsPasswordValid(false);
+      if (!event.target.value.match(testPassword)) {
+        setIsPasswordValid(false);
+        setLoginErrMessage('비밀번호 5자 이상 입력하세요');
+      } else {
+        setIsPasswordValid(true);
+        setLoginErrMessage('');
+      }
     }
   }
   //패스워드 validataion 끝
@@ -90,6 +103,8 @@ function LoginPage() {
           placeholder=""
           value={email}
           onChange={event => emailCheck(event)}
+          isCorrect={isEmailValid}
+          errorMessage={emailErrMsg}
         />
         <Input
           label="비밀번호"
@@ -99,7 +114,7 @@ function LoginPage() {
           placeholder=""
           value={password}
           onChange={event => passwordCheck(event)}
-          isCorrect={isCorrect}
+          isCorrect={isPasswordValid && isCorrect}
           errorMessage={loginErrMessage}
         />
         {isEmailValid && isPasswordValid ? (
