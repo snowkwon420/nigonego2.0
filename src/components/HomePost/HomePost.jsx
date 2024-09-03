@@ -1,27 +1,28 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import UserSearch from '../common/User/UserSearch';
-import { ReactComponent as BtnHeart } from '../../assets/image/BtnHeart.svg';
-import { ReactComponent as BtnHeartF } from '../../assets/image/BtnHeart.svg';
 import { ReactComponent as BtnComment } from '../../assets/image/BtnComment.svg';
 import Heart from '../common/Heart/Heart';
+import { useRecoilState } from 'recoil';
+import accountNameAtom from '../../atom/accountName';
 
 export default function HomePost({ data }) {
-  // const [feedPost, setFeedPost] = useState('');
   const navigate = useNavigate();
   const postListRef = useRef(null);
+  const [userId, setUserId] = useRecoilState(accountNameAtom);
 
   const postMainHandler = e => {
-    // setPostId(id);
-    console.log(e.target.value);
-    console.log(data.id);
     navigate('/postmain', {
       state: {
         id: data.id,
       },
     });
   };
+
+  useEffect(() => {
+    setUserId(data);
+  }, []);
 
   return (
     <HomePostwarpper ref={postListRef} className="HomePost">
@@ -37,7 +38,7 @@ export default function HomePost({ data }) {
               <BtnComment width="24px" />
               <span>{data.commentCount}</span>
             </button>
-            <Heart />
+            <Heart userData={data} />
           </div>
           {/* <time>{data.updatedAt}</time> */}
         </section>

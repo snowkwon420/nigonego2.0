@@ -11,7 +11,7 @@ import {
 
 function LoginMain() {
   return (
-    <Wrapper>
+    <>
       <Logo />
       <LoginSelect>
         <KakaoBtnLogin>카카오톡 계정으로 로그인</KakaoBtnLogin>
@@ -26,7 +26,7 @@ function LoginMain() {
           </li>
         </ul>
       </LoginSelect>
-    </Wrapper>
+    </>
   );
 }
 

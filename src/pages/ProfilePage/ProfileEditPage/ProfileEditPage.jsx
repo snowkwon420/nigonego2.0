@@ -2,24 +2,26 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useRecoilValue } from 'recoil';
-import { authAtom } from '../../../atom/atoms';
 import {
   Wrapper,
   HeadingWrapper,
   FormWrapper,
   ImageWrapper,
-  // BtnWrapper,
 } from './ProfileEditStyle';
 import { HeaderEditdNav } from '../../../components/common/Header/Header';
 import Input from '../../../components/common/Input/Input';
 import { LImage } from '../../../components/common/UserImage/UserImage';
-import { UploadButtonStyle } from '../../JoinPage/joinMemberStyle';
 import BodyGlobal from '../../../styles/BodyGlobal';
+import { ButtonShort } from '../../../components/common/button/Button';
+import authAtom from '../../../atom/authToken';
+import FileUploadInput from '../../../components/common/Input/FileUploadInput';
+import Layout from '../../../styles/Layout';
+
 export default function ProfileEditPage() {
   const [userName, setUserName] = useState('');
   const [userID, setUserID] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
-  const [userIntro, setUserIntro] = useState(false);
+  const [userIntro, setUserIntro] = useState('');
   const [isUserNameValid, setIsUserNameValid] = useState(false);
   const [isUserIDValid, setIsUserIDValid] = useState(false);
   const [errorMessageID, setErrorMessageID] = useState('');
@@ -70,10 +72,8 @@ export default function ProfileEditPage() {
           // setIsFormValid(false);
 
           setErrorMessageID('이미 사용 중인 ID 입니다.');
-          console.log(res.data);
         } else {
           setIsUserIDValid(true);
-          console.log(res);
           setIsFormValid(true);
         }
       } catch (error) {
@@ -106,7 +106,6 @@ export default function ProfileEditPage() {
 
   const handleSubmit = async e => {
     e.preventDefault();
-
     if (isUserNameValid && isUserIDValid) {
       setIsFormValid(true);
       // 다음 단계로 진행하는 로직 추가
@@ -145,7 +144,7 @@ export default function ProfileEditPage() {
   };
 
   return (
-    <Wrapper>
+    <>
       <HeaderEditdNav
         content="저장"
         isFormValid={isFormValid}
@@ -159,10 +158,11 @@ export default function ProfileEditPage() {
 
         <ImageWrapper>
           <LImage backgroundUrl={userImage} />
-          <UploadButtonStyle className="input-s">
-            <label htmlFor="input" />
-            <input id="input" type="file" onChange={handleImageUpload} />
-          </UploadButtonStyle>
+          <FileUploadInput
+            id="input"
+            type="file"
+            onChange={handleImageUpload}
+          />
         </ImageWrapper>
         <form onSubmit={handleSubmit}>
           <FormWrapper>
@@ -199,6 +199,6 @@ export default function ProfileEditPage() {
           </FormWrapper>
         </form>
       </BodyGlobal>
-    </Wrapper>
+    </>
   );
 }
