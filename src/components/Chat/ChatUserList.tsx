@@ -9,10 +9,10 @@ import styled from 'styled-components';
 //   UserChat,
 //   ChatDate,
 // } from './ChatUserListStyle';
-import { MImage } from '../common/UserImage/UserImage';
+import { MImage } from '../common/UserImage/UserImage.js';
 import { useNavigate } from 'react-router-dom';
 
-export default function ChatUserList({ userId }) {
+export default function ChatUserList({ userId }: { userId: string }) {
   const navigate = useNavigate();
 
   const handleChatClick = () => {

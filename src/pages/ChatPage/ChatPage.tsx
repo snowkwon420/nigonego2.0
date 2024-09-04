@@ -3,7 +3,7 @@ import { HeaderBasicNav } from '../../components/common/Header/Header';
 import Navbar from '../../components/common/Navbar/Navbar';
 import ChatUserList from '../../components/Chat/ChatUserList';
 import styled from 'styled-components';
-import BodyGlobal from './../../styles/BodyGlobal';
+import BodyGlobal from '../../styles/BodyGlobal';
 import Layout from '../../styles/Layout';
 
 const CommonWrapper = styled.section``;
