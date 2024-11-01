@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import { RecoilRoot } from 'recoil';
 import Routing from './routes/Routing.jsx';
 import GlobalStyle from './styles/globalstyle.js';
@@ -22,4 +23,5 @@ const Wrap = styled.div`
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   overflow: hidden;
 `;
+
 export default App;
