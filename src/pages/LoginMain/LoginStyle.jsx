@@ -1,14 +1,17 @@
-// import React from 'react';
 import styled from 'styled-components';
-
 import logoImage from '../../assets/images/logoImage.png';
 import kakaoIcon from '../../assets/icons/kakao.png';
 import googleIcon from '../../assets/icons/google.png';
 import facebookIcon from '../../assets/icons/facebook.png';
 
 const Logo = styled.section`
+  @media (min-width: 430px) {
+    height: 40%;
+  }
+  @media (max-width: 430px) {
+    height: 60%;
+  }
   width: 100%;
-  height: 60%;
   background: url(${logoImage}) no-repeat bottom/contain #ffde00;
 `;
 
@@ -18,7 +21,14 @@ const LoginSelect = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 40%;
+
+  @media (min-width: 430px) {
+    height: 20%;
+  }
+
+  @media (max-width: 430px) {
+    height: 40%;
+  }
 
   ul {
     display: flex;
