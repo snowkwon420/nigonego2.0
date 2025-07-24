@@ -23,12 +23,11 @@ export function HeaderBasicNav({ children, disabled }) {
   return (
     <HeaderDefaultStyle>
       <Arrow />
-      {(!isPostUpLoad && !isProductUpLoad) ? (
+      {!isPostUpLoad && !isProductUpLoad ? (
         <MoreIconButton />
       ) : (
         <ButtonShort disabled={disabled}>{children}</ButtonShort>
       )}
-
     </HeaderDefaultStyle>
   );
 }
@@ -102,7 +101,6 @@ export function HeaderMainNav({ content }) {
     </HeaderDefaultStyle>
   );
 }
-
 
 export function HeaderEditdNav({ content, isFormValid, handleSave }) {
   return (
