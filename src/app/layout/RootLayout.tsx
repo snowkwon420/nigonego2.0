@@ -1,10 +1,10 @@
 /* eslint-disable react/jsx-filename-extension */
 import { RecoilRoot } from 'recoil';
-import Routing from './routes/Routing.jsx';
-import GlobalStyle from './styles/globalstyle.js';
+import Routing from '../router/Routing';
+import GlobalStyle from '../styles/globalstyle.js';
 import styled from 'styled-components';
 
-const App: React.FC = () => {
+const RootLayout: React.FC = () => {
   return (
     <Wrap>
       <RecoilRoot>
@@ -24,4 +24,4 @@ const Wrap = styled.div`
   overflow: hidden;
 `;
 
-export default App;
+export default RootLayout;

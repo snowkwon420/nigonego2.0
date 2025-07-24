@@ -1,26 +1,26 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import StartSplash from '../pages/SplashPage/StartSplash';
-import LoginMain from '../pages/LoginMain/LoginMain';
-import LoginPage from '../pages/LoginPage/LoginPage';
-import JoinPage from '../pages/JoinPage/JoinPage';
-import HomeFeed from '../pages/HomeFeed/HomeFeed';
-import ChatPage from '../pages/ChatPage/ChatPage';
-import ChatRoom from '../pages/ChatPage/ChatRoom';
-import PostUploadPage from '../pages/PostPage/PostUpload/PostUpload';
-import ProductPage from '../pages/ProductPage/ProductPage';
-import MyProfilePage from '../pages/ProfilePage/MyProfilePage/MyProfilePage';
-import YourProfilePage from '../pages/ProfilePage/YourProfilePage/YourProfilePage';
-import ProfileEditPage from '../pages/ProfilePage/ProfileEditPage/ProfileEditPage';
-import SearchPage from '../pages/SearchPage/SearchPage';
-import NotFound from '../pages/NotFound/NotFound';
-import Test from '../components/Test/Test';
-import JoinMember from '../pages/JoinPage/JoinMember';
-import PostMain from '../pages/PostPage/PostMain/PostMain';
-import HomeBlank from '../pages/HomePage/HomePage';
-import MyFollowersPage from '../pages/ProfilePage/MyProfilePage/MyFollowersPage';
-import { Arrow, HeaderBasicNav } from '../components/common/Header/Header';
-import Product from '../components/Product/Product';
+import StartSplash from '../../pages/SplashPage/StartSplash';
+import LoginMain from '../../pages/LoginMain/LoginMain';
+import LoginPage from '../../pages/LoginPage/LoginPage';
+import JoinPage from '../../pages/JoinPage/JoinPage';
+import HomeFeed from '../../pages/HomeFeed/HomeFeed';
+import ChatPage from '../../pages/ChatPage/ChatPage';
+import ChatRoom from '../../pages/ChatPage/ChatRoom';
+import PostUploadPage from '../../pages/PostPage/PostUpload/PostUpload';
+import ProductPage from '../../pages/ProductPage/ProductPage';
+import MyProfilePage from '../../pages/ProfilePage/MyProfilePage/MyProfilePage';
+import YourProfilePage from '../../pages/ProfilePage/YourProfilePage/YourProfilePage';
+import ProfileEditPage from '../../pages/ProfilePage/ProfileEditPage/ProfileEditPage';
+import SearchPage from '../../pages/SearchPage/SearchPage';
+import NotFound from '../../pages/NotFound/NotFound';
+import Test from '../../components/Test/Test';
+import JoinMember from '../../pages/JoinPage/JoinMember';
+import PostMain from '../../pages/PostPage/PostMain/PostMain';
+import HomeBlank from '../../pages/HomePage/HomePage';
+import MyFollowersPage from '../../pages/ProfilePage/MyProfilePage/MyFollowersPage';
+import { Arrow, HeaderBasicNav } from '../../shared/components/Header/Header';
+import Product from '../../components/Product/Product';
 
 function Routing() {
   return (
