@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as IconSearch } from '../../../assets/image/IconSearch.svg';
-import { ReactComponent as IconArrow } from '../../../assets/image/IconArrowLeft.svg';
+import { ReactComponent as IconSearch } from '../../assets/image/IconSearch.svg';
+import { ReactComponent as IconArrow } from '../../assets/image/IconArrowLeft.svg';
 
 import { ButtonShort, MoreIconButton } from '../button/Button';
 import SearchInput from '../Input/SearchInput';

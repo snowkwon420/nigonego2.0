@@ -4,10 +4,10 @@ import { MImage } from '../UserImage/UserImage';
 import { UserSection, UserName, UserId } from './UserSearch';
 import { ButtonShort, SBtn } from '../button/Button';
 import { useLocation } from 'react-router-dom';
-import UseFetchToken from '../../../Hooks/UseFetchToken';
+import UseFetchToken from '../../hooks/UseFetchToken';
 import { useRecoilValue } from 'recoil';
-import atomYourAccount from '../../../atom/atomYourAccount';
-import accountNameAtom from '../../../atom/accountName';
+import atomYourAccount from '../../../app/store/atomYourAccount';
+import accountNameAtom from '../../../app/store/accountName';
 
 const StyledFollower = styled.section`
   width: 100%;

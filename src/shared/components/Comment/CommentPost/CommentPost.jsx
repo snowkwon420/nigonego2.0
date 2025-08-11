@@ -6,8 +6,8 @@ import styled from 'styled-components';
 import { XSImage } from '../../UserImage/UserImage';
 import { MoreIconButton, MoreIconButtonStyle } from '../../button/Button';
 import { useNavigate } from 'react-router-dom';
-import accountNameAtom from '../../../../atom/accountName';
-import moreIcon from '../../../../assets/icons/icon-more-vertical.png';
+import accountNameAtom from '../../../../app/store/accountName';
+import moreIcon from '../../../assets/icons/icon-more-vertical.png';
 import SlideModal, { CommentSlideModal } from '../../Modal/SlideModal';
 
 function CommentPost(comment) {

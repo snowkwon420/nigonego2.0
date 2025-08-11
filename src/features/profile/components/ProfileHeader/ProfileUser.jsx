@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import accountNameAtom from '../../atom/accountName';
+import accountNameAtom from '../../../../app/store/accountName';
 
 const ProfileUserWrapper = styled.div`
   /* box-shadow: inset 0 0 10px blue; */

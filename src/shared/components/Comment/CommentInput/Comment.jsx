@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import userDefaultImage from '../../../../assets/images/basic-profile-img.png';
+import userDefaultImage from '../../../assets/images/basic-profile-img.png';
 import { useRecoilValue } from 'recoil';
-import authAtom from '../../../../atom/authToken';
+import authAtom from '../../../../app/store/authToken';
 
 export const CommentWrapper = styled.div`
   width: 100%;

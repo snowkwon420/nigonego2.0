@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import basicImg from '../../../assets/images/basic-profile-img.png';
+import basicImg from '../../assets/images/basic-profile-img.png';
 
 /**
 이미지컴포넌트에서 나중에 프로필에서 이미지 설정할때 사용될거같아서

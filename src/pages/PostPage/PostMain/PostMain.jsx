@@ -2,15 +2,15 @@ import React, { useState, useEffect, useCallback } from 'react';
 // import Navbar from '../../../components/common/Navbar/Navbar';
 import styled from 'styled-components';
 import axios from 'axios';
-import { HeaderBasicNav } from '../../../components/common/Header/Header';
-import HomePost from '../../../components/HomePost/HomePost';
-import CommentInput from '../../../components/common/Comment/CommentInput/Comment';
-import CommentPost from '../../../components/common/Comment/CommentPost/CommentPost';
+import { HeaderBasicNav } from '../../../shared/components/Header/Header';
+import HomePost from '../../../features/feed/components/HomePost/HomePost';
+import CommentInput from '../../../shared/components/Comment/CommentInput/Comment';
+import CommentPost from '../../../shared/components/Comment/CommentPost/CommentPost';
 import { useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import authAtom from '../../../atom/authToken';
-import useFetchToken from '../../../Hooks/UseFetchToken';
-import Layout from '../../../styles/Layout';
+import authAtom from '../../../app/store/authToken';
+import useFetchToken from '../../../shared/hooks/UseFetchToken';
+import Layout from '../../../app/styles/Layout';
 
 function PostMain() {
   const auth = useRecoilValue(authAtom);

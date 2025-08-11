@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import ProductItem from './ProductItem';
-import UseFetchToken from '../../Hooks/UseFetchToken';
+import UseFetchToken from '../../../../shared/hooks/UseFetchToken';
 
 const ProductWrapper = styled.div`
   text-align: center;

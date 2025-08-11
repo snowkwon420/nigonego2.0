@@ -1,10 +1,10 @@
 import React from 'react';
-import { HeaderBasicNav } from '../../components/common/Header/Header';
-import Navbar from '../../components/common/Navbar/Navbar';
-import ChatUserList from '../../components/Chat/ChatUserList';
+import { HeaderBasicNav } from '../../shared/components/Header/Header';
+import Navbar from '../../shared/components/Navbar/Navbar';
+import ChatUserList from '../../features/chat/components/ChatUserList';
 import styled from 'styled-components';
-import BodyGlobal from './../../styles/BodyGlobal';
-import Layout from '../../styles/Layout';
+import BodyGlobal from '../../app/styles/BodyGlobal';
+import Layout from '../../app/styles/Layout';
 
 const CommonWrapper = styled.section``;
 

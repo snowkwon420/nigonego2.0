@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import UserSearch from '../common/User/UserSearch';
-import { ReactComponent as BtnComment } from '../../assets/image/BtnComment.svg';
-import Heart from '../common/Heart/Heart';
+import UserSearch from '../../../../shared/components/User/UserSearch';
+import { ReactComponent as BtnComment } from '../../../../shared/assets/image/BtnComment.svg';
+import Heart from '../../../../shared/components/Heart/Heart';
 import { useRecoilState } from 'recoil';
-import accountNameAtom from '../../atom/accountName';
+import accountNameAtom from '../../../../app/store/accountName';
 
 export default function HomePost({ data }) {
   const navigate = useNavigate();

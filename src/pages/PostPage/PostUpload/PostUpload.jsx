@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { HeaderBasicNav } from '../../../components/common/Header/Header';
-import { SImage } from '../../../components/common/UserImage/UserImage';
-import buttonImg from '../../../assets/images/upload-file.svg';
+import { HeaderBasicNav } from '../../../shared/components/Header/Header';
+import { SImage } from '../../../shared/components/UserImage/UserImage';
+import buttonImg from '../../../shared/assets/images/upload-file.svg';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { useRecoilValue } from 'recoil';
-import BodyGlobal from '../../../styles/BodyGlobal';
-import authAtom from '../../../atom/authToken';
-import Layout from '../../../styles/Layout';
-import FileUploadInput from '../../../components/common/Input/FileUploadInput';
-import useFetchToken from '../../../Hooks/UseFetchToken';
-import UserProfileCircle from '../../../components/common/User/UserProfileCircle';
+import BodyGlobal from '../../../app/styles/BodyGlobal';
+import authAtom from '../../../app/store/authToken';
+import Layout from '../../../app/styles/Layout';
+import FileUploadInput from '../../../shared/components/Input/FileUploadInput';
+import useFetchToken from '../../../shared/hooks/UseFetchToken';
+import UserProfileCircle from '../../../shared/components/User/UserProfileCircle';
 export default function PostUpload() {
   const navigate = useNavigate();
   const user = 'nigonego';

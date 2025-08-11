@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import YourProduct from '../../../components/Product/YourProduct';
-import YourHomePost from '../../../components/HomePost/YourHomePost';
-import YourProfileHeader from '../../../components/YourProfileHeader/YourProfileHeader';
-import Navbar from '../../../components/common/Navbar/Navbar';
-import { HeaderBasicNav } from '../../../components/common/Header/Header';
-import HomePostGrid from '../../../components/HomePost/HomePostGrid';
+import YourProduct from '../../../features/product/components/Product/YourProduct';
+import YourHomePost from '../../../features/feed/components/HomePost/YourHomePost';
+import YourProfileHeader from '../../../features/profile/components/YourProfileHeader/YourProfileHeader';
+import Navbar from '../../../shared/components/Navbar/Navbar';
+import { HeaderBasicNav } from '../../../shared/components/Header/Header';
+import HomePostGrid from '../../../features/feed/components/HomePost/HomePostGrid';
 import styled from 'styled-components';
-import BodyGlobal from '../../../styles/BodyGlobal';
-import { ReactComponent as BtnVertical } from '../../../assets/image/BtnVertical.svg';
-import { ReactComponent as BtnGrid } from '../../../assets/image/BtnGrid.svg';
-import Layout from '../../../styles/Layout';
-import ProfileHeader from '../../../components/ProfileHeader/ProfileHeader';
+import BodyGlobal from '../../../app/styles/BodyGlobal';
+import { ReactComponent as BtnVertical } from '../../../shared/assets/image/BtnVertical.svg';
+import { ReactComponent as BtnGrid } from '../../../shared/assets/image/BtnGrid.svg';
+import Layout from '../../../app/styles/Layout';
+import ProfileHeader from '../../../features/profile/components/ProfileHeader/ProfileHeader';
 
 export default function YourProfilePage() {
   const [isClickedList, setIsClickedList] = useState(true);

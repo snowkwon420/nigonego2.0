@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import basicImg from '../../../assets/images/basic-profile-img.png';
+import basicImg from '../../assets/images/basic-profile-img.png';
 
 const UserProfileCircle = ({isWidth}) => {
     return (

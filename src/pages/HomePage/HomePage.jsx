@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import { HeaderMainNav } from '../../components/common/Header/Header';
-import Navbar from '../../components/common/Navbar/Navbar';
-import { ButtonMiddle } from '../../components/common/button/Button';
-import { ReactComponent as LogoColorImg } from '../../assets/image/LogoColorImg.svg';
+import { HeaderMainNav } from '../../shared/components/Header/Header';
+import Navbar from '../../shared/components/Navbar/Navbar';
+import { ButtonMiddle } from '../../shared/components/button/Button';
+import { ReactComponent as LogoColorImg } from '../../shared/assets/image/LogoColorImg.svg';
 import { useNavigate } from 'react-router-dom';
-import Layout from '../../styles/Layout';
+import Layout from '../../app/styles/Layout';
 
 function HomePage() {
   return (

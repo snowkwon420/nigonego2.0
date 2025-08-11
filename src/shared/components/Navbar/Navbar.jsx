@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NavbarWrapper } from './NavbarStyle';
-import { ReactComponent as HomeIcon } from '../../../assets/icons/icon-home-fill.svg';
-import { ReactComponent as ChatIcon } from '../../../assets/icons/icon-message-circle.svg';
-import { ReactComponent as PostIcon } from '../../../assets/icons/icon-edit.svg';
-import { ReactComponent as ProfileIcon } from '../../../assets/icons/icon-user.svg';
-import { ReactComponent as HomeIconF } from '../../../assets/icons/icon-home-f.svg';
-import { ReactComponent as ChatIconF } from '../../../assets/icons/icon-message-circle-f.svg';
-import { ReactComponent as PostIconF } from '../../../assets/icons/icon-edit-f.svg';
-import { ReactComponent as ProfileIconF } from '../../../assets/icons/icon-user-fill-f.svg';
-import UseFetchToken from '../../../Hooks/UseFetchToken';
+import { ReactComponent as HomeIcon } from '../../assets/icons/icon-home-fill.svg';
+import { ReactComponent as ChatIcon } from '../../assets/icons/icon-message-circle.svg';
+import { ReactComponent as PostIcon } from '../../assets/icons/icon-edit.svg';
+import { ReactComponent as ProfileIcon } from '../../assets/icons/icon-user.svg';
+import { ReactComponent as HomeIconF } from '../../assets/icons/icon-home-f.svg';
+import { ReactComponent as ChatIconF } from '../../assets/icons/icon-message-circle-f.svg';
+import { ReactComponent as PostIconF } from '../../assets/icons/icon-edit-f.svg';
+import { ReactComponent as ProfileIconF } from '../../assets/icons/icon-user-fill-f.svg';
+import UseFetchToken from '../../hooks/UseFetchToken';
 
 export default function Navbar({ homeV, chatV, postV, profileV }) {
   const navigate = useNavigate();

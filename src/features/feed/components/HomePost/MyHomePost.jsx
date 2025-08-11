@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import UseFetchToken from '../../Hooks/UseFetchToken';
-import UserSearch from '../common/User/UserSearch';
-import { ReactComponent as BtnComment } from '../../assets/image/BtnComment.svg';
-import Heart from '../common/Heart/Heart';
+import UseFetchToken from '../../../../shared/hooks/UseFetchToken';
+import UserSearch from '../../../../shared/components/User/UserSearch';
+import { ReactComponent as BtnComment } from '../../../../shared/assets/image/BtnComment.svg';
+import Heart from '../../../../shared/components/Heart/Heart';
 
 export default function MyHomePost({ accountName }) {
   const { getPostListLimit } = UseFetchToken();

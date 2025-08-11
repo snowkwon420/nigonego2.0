@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MImage } from '../UserImage/UserImage';
 import { useNavigate } from 'react-router-dom';
-import UseFetchToken from '../../../Hooks/UseFetchToken';
+import UseFetchToken from '../../hooks/UseFetchToken';
 
 export default function UserSearch({ data }) {
   const navigate = useNavigate();

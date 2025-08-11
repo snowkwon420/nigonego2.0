@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import ProfileUser from './ProfileUser';
 import MyProfileBtn from './MyProfileBtn';
 import { useRecoilValue } from 'recoil';
-import accountNameAtom from '../../atom/accountName';
-import UseFetchToken from '../../Hooks/UseFetchToken';
+import accountNameAtom from '../../../../app/store/accountName';
+import UseFetchToken from '../../../../shared/hooks/UseFetchToken';
 
 export default function ProfileHeader({ userData, myData }) {
   const { getProfileData } = UseFetchToken();

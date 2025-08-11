@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { HeaderBasicNav } from '../../../components/common/Header/Header';
-import Navbar from '../../../components/common/Navbar/Navbar';
-import UserFollow from '../../../components/common/User/UserFollow';
+import { HeaderBasicNav } from '../../../shared/components/Header/Header';
+import Navbar from '../../../shared/components/Navbar/Navbar';
+import UserFollow from '../../../shared/components/User/UserFollow';
 
 const UserFollowWrapper = styled.div`
   display: flex;

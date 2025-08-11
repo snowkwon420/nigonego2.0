@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import YourProfileUser from './YourProfileUser';
 import YourProfileBtn from './YourProfileBtn';
-import UseFetchToken from '../../Hooks/UseFetchToken';
+import UseFetchToken from '../../../../shared/hooks/UseFetchToken';
 const ProfileHeaderWrapper = styled.div``;
 
 export default function ProfileHeader({ accountname }) {

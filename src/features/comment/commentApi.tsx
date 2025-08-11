@@ -1,4 +1,4 @@
-import createAxiosInstance from '@/shared/lib/axios';
+import createAxiosInstance from '../../shared/lib/axios';
 
 // 댓글 목록 가져오기
 export const getCommentList = async (postId: string, token: string) => {

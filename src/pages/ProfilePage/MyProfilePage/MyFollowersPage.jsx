@@ -1,10 +1,10 @@
 import React from 'react';
-import Navbar from '../../../components/common/Navbar/Navbar';
-import UserFollow from '../../../components/common/User/UserFollow';
-import { HeaderBasicNav } from '../../../components/common/Header/Header';
+import Navbar from '../../../shared/components/Navbar/Navbar';
+import UserFollow from '../../../shared/components/User/UserFollow';
+import { HeaderBasicNav } from '../../../shared/components/Header/Header';
 import { useRecoilValue } from 'recoil';
-import accountNameAtom from '../../../atom/accountName';
-import Layout from '../../../styles/Layout';
+import accountNameAtom from '../../../app/store/accountName';
+import Layout from '../../../app/styles/Layout';
 
 export default function MyFollowersPage() {
   return (

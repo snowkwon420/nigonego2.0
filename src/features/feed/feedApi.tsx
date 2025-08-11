@@ -1,4 +1,4 @@
-import createAxiosInstance from '@/shared/lib/axios';
+import createAxiosInstance from '../../shared/lib/axios';
 
 // 홈 피드: limit/skip 적용해서 가져오기
 export const getHomeFeed = async (

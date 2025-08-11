@@ -1,5 +1,5 @@
 import React from 'react';
-import buttonImg from '../../../assets/image/BtnImgUpload.svg';
+import buttonImg from '../../assets/image/BtnImgUpload.svg';
 import styled from 'styled-components';
 const FileUploadInput = ({
   id,

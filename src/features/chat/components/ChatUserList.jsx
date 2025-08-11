@@ -9,7 +9,7 @@ import styled from 'styled-components';
 //   UserChat,
 //   ChatDate,
 // } from './ChatUserListStyle';
-import { MImage } from '../common/UserImage/UserImage';
+import { MImage } from '../../../shared/components/UserImage/UserImage';
 import { useNavigate } from 'react-router-dom';
 
 export default function ChatUserList({ userId }) {

@@ -1,7 +1,7 @@
 import React from 'react';
-import SVG from '../../assets/images/404 page.svg';
+import SVG from '../../shared/assets/images/404 page.svg';
 import { Image, NotFoundText, NotFoundBtn } from './NotFoundStyle';
-import Layout from "../../styles/Layout";
+import Layout from "../../app/styles/Layout";
 
 export default function NotFound() {
   return (

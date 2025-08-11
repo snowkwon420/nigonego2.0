@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { ButtonMiddle } from '../common/button/Button';
-import { ReactComponent as BtnShare } from '../../assets/image/BtnShare.svg';
-import { ReactComponent as BtnComment } from '../../assets/image/BtnComment.svg';
+import { ButtonMiddle } from '../../../../shared/components/button/Button';
+import { ReactComponent as BtnShare } from '../../../../shared/assets/image/BtnShare.svg';
+import { ReactComponent as BtnComment } from '../../../../shared/assets/image/BtnComment.svg';
 import { useState } from 'react';
 
 const FollowBtnWrapper = styled.div`

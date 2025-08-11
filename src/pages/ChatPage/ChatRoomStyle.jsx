@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import buttonImg from '../../assets/images/upload-file.svg';
+import buttonImg from '../../shared/assets/images/upload-file.svg';
 const CommonWrapper = styled.section``;
 const ChatWrapper = styled.div`
   background-color: var('--light-grey');

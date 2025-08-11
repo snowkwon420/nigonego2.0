@@ -1,4 +1,4 @@
-import createAxiosInstance from '@/shared/lib/axios';
+import createAxiosInstance from '../../shared/lib/axios';
 
 // 게시글 업로드
 export const postPostUpload = async (

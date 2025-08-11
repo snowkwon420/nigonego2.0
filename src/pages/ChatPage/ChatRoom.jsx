@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { HeaderChatNav } from '../../components/common/Header/Header';
+import { HeaderChatNav } from '../../shared/components/Header/Header';
 import {
   ChatNav,
   UploadImageWrapper,
@@ -17,11 +17,11 @@ import {
   CommonWrapper,
   UploadButtonStyle,
 } from './ChatRoomStyle';
-import { CommentWrapper } from '../../components/common/Comment/CommentInput/Comment';
-import { SImage } from '../../components/common/UserImage/UserImage';
-import buttonImg from '../../assets/images/upload-file.svg';
-import BodyGlobal from '../../styles/BodyGlobal';
-import Layout from "../../styles/Layout";
+import { CommentWrapper } from '../../shared/components/Comment/CommentInput/Comment';
+import { SImage } from '../../shared/components/UserImage/UserImage';
+import buttonImg from '../../shared/assets/images/upload-file.svg';
+import BodyGlobal from '../../app/styles/BodyGlobal';
+import Layout from "../../app/styles/Layout";
 
 export default function ChatRoom() {
   const [comment, setComment] = useState('');

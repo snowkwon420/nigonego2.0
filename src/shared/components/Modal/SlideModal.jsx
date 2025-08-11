@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import slideIcon from '../../../assets/icons/slide-top-icon.png';
+import slideIcon from '../../assets/icons/slide-top-icon.png';
 import { LogoutModal, CommentModal } from './Modal';
 
 export default function SlideModal({ closeModal }) {

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { followingAtom } from '../../../atom/atoms';
-import accountNameAtom from '../../../atom/accountName';
+import { followingAtom } from '../../../app/store/atoms';
+import accountNameAtom from '../../../app/store/accountName';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import authAtom from '../../../atom/authToken';
+import authAtom from '../../../app/store/authToken';
 
 export default function Modal() {
   const [isOpen, setIsOpen] = useState(true);

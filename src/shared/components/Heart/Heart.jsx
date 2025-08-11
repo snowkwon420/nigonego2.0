@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ReactComponent as BtnHeartF } from './../../../assets/icons/BtnHeartF.svg';
-import UseFetchToken from '../../../Hooks/UseFetchToken';
+import { ReactComponent as BtnHeartF } from '../../assets/icons/BtnHeartF.svg';
+import UseFetchToken from '../../hooks/UseFetchToken';
 
 export default function Heart({ userData }) {
   const [like, setLike] = useState(userData.hearted);

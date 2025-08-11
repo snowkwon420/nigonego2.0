@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { HeaderSearchNav } from '../../components/common/Header/Header';
-import Navbar from '../../components/common/Navbar/Navbar';
-import UserSearch from '../../components/common/User/UserSearch';
+import { HeaderSearchNav } from '../../shared/components/Header/Header';
+import Navbar from '../../shared/components/Navbar/Navbar';
+import UserSearch from '../../shared/components/User/UserSearch';
 import SearchWrapper from './SearchPageStyle';
-import Layout from "../../styles/Layout";
+import Layout from "../../app/styles/Layout";
 function SearchPage() {
   const [data, setdata] = useState(null);
   return (

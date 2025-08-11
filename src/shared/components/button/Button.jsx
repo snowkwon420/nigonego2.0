@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import SlideModal from '../Modal/SlideModal';
-import { ReactComponent as IconMoreView } from '../../../assets/image/IconMoreView.svg';
+import { ReactComponent as IconMoreView } from '../../assets/image/IconMoreView.svg';
 
 //버튼 공통 스타일
 const ButtonCommonStyle = css`

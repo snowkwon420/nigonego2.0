@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ReactComponent as IconImagies } from '../../assets/image/IconImagies.svg';
+import { ReactComponent as IconImagies } from '../../../../shared/assets/image/IconImagies.svg';
 
 export default function HomePostGridListItem({ img }) {
   return (

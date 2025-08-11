@@ -1,4 +1,4 @@
-import authAtom from '../atom/authToken';
+import authAtom from '../../app/store/authToken';
 import { useRecoilValue } from 'recoil';
 import createAxiosInstance from '../api/Api';
 

@@ -14,13 +14,10 @@ import YourProfilePage from '../../pages/ProfilePage/YourProfilePage/YourProfile
 import ProfileEditPage from '../../pages/ProfilePage/ProfileEditPage/ProfileEditPage';
 import SearchPage from '../../pages/SearchPage/SearchPage';
 import NotFound from '../../pages/NotFound/NotFound';
-import Test from '../../components/Test/Test';
 import JoinMember from '../../pages/JoinPage/JoinMember';
 import PostMain from '../../pages/PostPage/PostMain/PostMain';
 import HomeBlank from '../../pages/HomePage/HomePage';
 import MyFollowersPage from '../../pages/ProfilePage/MyProfilePage/MyFollowersPage';
-import { Arrow, HeaderBasicNav } from '../../shared/components/Header/Header';
-import Product from '../../components/Product/Product';
 
 function Routing() {
   return (

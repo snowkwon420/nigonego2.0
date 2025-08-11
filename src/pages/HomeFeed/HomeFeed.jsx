@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
 // import { useNavigate } from 'react-router-dom';
-import accountNameAtom from '../../atom/accountName';
+import accountNameAtom from '../../app/store/accountName';
 import styled from 'styled-components';
-import HomePost from '../../components/HomePost/HomePost';
-import Navbar from '../../components/common/Navbar/Navbar';
-import { HeaderBasicNav } from '../../components/common/Header/Header';
-import authAtom from '../../atom/authToken';
-import UseFetchToken from '../../Hooks/UseFetchToken';
-import Layout from '../../styles/Layout';
+import HomePost from '../../features/feed/components/HomePost/HomePost';
+import Navbar from '../../shared/components/Navbar/Navbar';
+import { HeaderBasicNav } from '../../shared/components/Header/Header';
+import authAtom from '../../app/store/authToken';
+import UseFetchToken from '../../shared/hooks/UseFetchToken';
+import Layout from '../../app/styles/Layout';
 import HomePage from '../HomePage/HomePage';
 
 function HomeFeed(props) {
