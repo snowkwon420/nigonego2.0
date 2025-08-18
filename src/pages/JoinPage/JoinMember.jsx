@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import FileUploadInput from '../../components/common/Input/FileUploadInput';
+import FileUploadInput from '../../shared/components/Input/FileUploadInput';
 
-import Input from '../../components/common/Input/Input';
-import { ButtonLong } from '../../components/common/button/Button';
-import { LImage } from '../../components/common/UserImage/UserImage';
-import MainWrapperF from '../../styles/MainGlobal';
+import Input from '../../shared/components/Input/Input';
+import { ButtonLong } from '../../shared/components/button/Button';
+import { LImage } from '../../shared/components/UserImage/UserImage';
+import MainWrapperF from '../../app/styles/MainGlobal';
 import styled from 'styled-components';
-import UseFetchToken from '../../Hooks/UseFetchToken';
+import UseFetchToken from '../../shared/hooks/UseFetchToken';
 import { Wrapper } from '../LoginPage/LoginPage';
 
 export default function JoinMember() {

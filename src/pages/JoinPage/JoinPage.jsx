@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ButtonLong } from '../../components/common/button/Button';
-import Input from '../../components/common/Input/Input';
+import { ButtonLong } from '../../shared/components/button/Button';
+import Input from '../../shared/components/Input/Input';
 import { FormWrapper, Wrapper } from '../LoginPage/LoginPage';
-import UseFetchToken from '../../Hooks/UseFetchToken';
+import UseFetchToken from '../../shared/hooks/UseFetchToken';
 
 function JoinPage() {
   const [email, setEmail] = useState('');

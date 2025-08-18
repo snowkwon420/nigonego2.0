@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Input from '../../components/common/Input/Input';
+import Input from '../../shared/components/Input/Input';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import authAtom from '../../atom/authToken';
+import authAtom from '../../app/store/authToken';
 
-import FileUploadInput from '../../components/common/Input/FileUploadInput';
-import { HeaderBasicNav } from '../../components/common/Header/Header';
-import Layout from '../../styles/Layout';
+import FileUploadInput from '../../shared/components/Input/FileUploadInput';
+import { HeaderBasicNav } from '../../shared/components/Header/Header';
+import Layout from '../../app/styles/Layout';
 
-import useFetchToken from '../../Hooks/UseFetchToken';
+import useFetchToken from '../../shared/hooks/UseFetchToken';
 export default function ProductPage() {
   const navigate = useNavigate();
 

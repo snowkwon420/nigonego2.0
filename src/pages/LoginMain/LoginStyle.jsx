@@ -1,10 +1,10 @@
 // import React from 'react';
 import styled from 'styled-components';
 
-import logoImage from '../../assets/images/logoImage.png';
-import kakaoIcon from '../../assets/icons/kakao.png';
-import googleIcon from '../../assets/icons/google.png';
-import facebookIcon from '../../assets/icons/facebook.png';
+import logoImage from '../../shared/assets/images/logoImage.png';
+import kakaoIcon from '../../shared/assets/icons/kakao.png';
+import googleIcon from '../../shared/assets/icons/google.png';
+import facebookIcon from '../../shared/assets/icons/facebook.png';
 
 const Logo = styled.section`
   width: 100%;

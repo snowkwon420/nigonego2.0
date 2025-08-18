@@ -1,15 +1,15 @@
-import MyHomePost from '../../../components/HomePost/MyHomePost';
-import Product from '../../../components/Product/Product';
-import ProfileHeader from '../../../components/ProfileHeader/ProfileHeader';
-import Navbar from '../../../components/common/Navbar/Navbar';
-import { HeaderBasicNav } from '../../../components/common/Header/Header';
-import BodyGlobal from '../../../styles/BodyGlobal';
-import { ReactComponent as BtnVertical } from '../../../assets/image/BtnVertical.svg';
-import { ReactComponent as BtnGrid } from '../../../assets/image/BtnGrid.svg';
+import MyHomePost from '../../../features/feed/components/HomePost/MyHomePost';
+import Product from '../../../features/product/components/Product/Product';
+import ProfileHeader from '../../../features/profile/components/ProfileHeader/ProfileHeader';
+import Navbar from '../../../shared/components/Navbar/Navbar';
+import { HeaderBasicNav } from '../../../shared/components/Header/Header';
+import BodyGlobal from '../../../app/styles/BodyGlobal';
+import { ReactComponent as BtnVertical } from '../../../shared/assets/image/BtnVertical.svg';
+import { ReactComponent as BtnGrid } from '../../../shared/assets/image/BtnGrid.svg';
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import HomePostGrid from '../../../components/HomePost/HomePostGrid';
-import Layout from '../../../styles/Layout';
+import HomePostGrid from '../../../features/feed/components/HomePost/HomePostGrid';
+import Layout from '../../../app/styles/Layout';
 import { useLocation } from 'react-router-dom';
 
 export default function MyProfilePage() {

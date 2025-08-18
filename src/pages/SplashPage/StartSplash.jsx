@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import SplashPage from './SplashPage';
 import LoginMain from '../LoginMain/LoginMain';
-import authAtom from '../../atom/authToken';
+import authAtom from '../../app/store/authToken';
 import { useRecoilValue } from 'recoil';
 import HomeFeed from '../HomeFeed/HomeFeed';
-import accountNameAtom from '../../atom/accountName';
+import accountNameAtom from '../../app/store/accountName';
 
 function StartSplash() {
   const [loading, setloading] = useState(false);

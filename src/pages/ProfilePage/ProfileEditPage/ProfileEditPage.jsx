@@ -8,14 +8,14 @@ import {
   FormWrapper,
   ImageWrapper,
 } from './ProfileEditStyle';
-import { HeaderEditdNav } from '../../../components/common/Header/Header';
-import Input from '../../../components/common/Input/Input';
-import { LImage } from '../../../components/common/UserImage/UserImage';
-import BodyGlobal from '../../../styles/BodyGlobal';
-import { ButtonShort } from '../../../components/common/button/Button';
-import authAtom from '../../../atom/authToken';
-import FileUploadInput from '../../../components/common/Input/FileUploadInput';
-import Layout from '../../../styles/Layout';
+import { HeaderEditdNav } from '../../../shared/components/Header/Header';
+import Input from '../../../shared/components/Input/Input';
+import { LImage } from '../../../shared/components/UserImage/UserImage';
+import BodyGlobal from '../../../app/styles/BodyGlobal';
+import { ButtonShort } from '../../../shared/components/button/Button';
+import authAtom from '../../../app/store/authToken';
+import FileUploadInput from '../../../shared/components/Input/FileUploadInput';
+import Layout from '../../../app/styles/Layout';
 
 export default function ProfileEditPage() {
   const [userName, setUserName] = useState('');

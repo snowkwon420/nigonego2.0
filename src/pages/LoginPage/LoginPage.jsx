@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import Input from '../../components/common/Input/Input';
-import { followingAtom } from '../../atom/atoms';
-import authAtom from '../../atom/authToken';
-import accountNameAtom from '../../atom/accountName';
-import MainWrapperF from '../../styles/MainGlobal';
-import { ButtonLong } from '../../components/common/button/Button';
-import Layout from '../../styles/Layout';
-import UseFetchToken from '../../Hooks/UseFetchToken';
+import Input from '../../shared/components/Input/Input';
+import { followingAtom } from '../../app/store/atoms';
+import authAtom from '../../app/store/authToken';
+import accountNameAtom from '../../app/store/accountName';
+import MainWrapperF from '../../app/styles/MainGlobal';
+import { ButtonLong } from '../../shared/components/button/Button';
+import Layout from '../../app/styles/Layout';
+import UseFetchToken from '../../shared/hooks/UseFetchToken';
 
 function LoginPage() {
   const [email, setEmail] = useState('');

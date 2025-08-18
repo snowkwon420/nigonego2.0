@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { authTokenAtom } from '@/features/auth/store';
+import { authTokenAtom } from './store';
 import * as authAPI from './authApi';
 
 export const useAuthAPI = () => {
