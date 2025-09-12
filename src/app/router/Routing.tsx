@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import StartSplash from '../../pages/SplashPage/StartSplash';
 import LoginMain from '../../pages/LoginMain/LoginMain';
 import LoginPage from '../../pages/LoginPage/LoginPage';
-import JoinPage from '../../pages/JoinPage/JoinPage';
+import JoinPage from '../../pages/JoinPage/JoinMember';
 import HomeFeed from '../../pages/HomeFeed/HomeFeed';
 import ChatPage from '../../pages/ChatPage/ChatPage';
 import ChatRoom from '../../pages/ChatPage/ChatRoom';
