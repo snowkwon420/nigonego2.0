@@ -1,14 +1,12 @@
-import React, { useState, useEffect, useRef, forwardRef, MouseEvent } from 'react';
+import { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-// import { authAtom } from '../../../../atom/atoms';
-// import { GetCommentData } from '../../../../api/getData/getData';
 import styled from 'styled-components';
 import { XSImage } from '../../UserImage/UserImage';
-import { MoreIconButton, MoreIconButtonStyle } from '../../button/Button';
+import { MoreIconButtonStyle } from '../../button/Button';
 import { useNavigate } from 'react-router-dom';
 import accountNameAtom from '../../../../app/store/accountName';
 import moreIcon from '../../../assets/icons/icon-more-vertical.png';
-import SlideModal, { CommentSlideModal } from '../../Modal/SlideModal';
+import { CommentSlideModal } from '../../Modal/SlideModal';
 
 interface CommentAuthor {
   accountname: string;
@@ -40,7 +38,7 @@ function CommentPost({ comment }: CommentData) {
       setIsMyComment(false);
     }
     console.log(isMyComment);
-  }, []);
+  }, [accountname, comment.author.accountname, isMyComment]);
 
   useEffect(() => {
     setIsSlideOpen(false);
@@ -71,7 +69,7 @@ function CommentPost({ comment }: CommentData) {
     }
   };
 
-  const profileHandler = (e: MouseEvent) => {
+  const profileHandler = () => {
     if (isMyComment) {
       navigate(`/myprofile`, {
         state: { user: accountname },
@@ -85,7 +83,7 @@ function CommentPost({ comment }: CommentData) {
     }
   };
 
-  const closeModal = (event: MouseEvent<HTMLDivElement>) => {
+  const closeModal = () => {
     setIsSlideOpen(false);
   };
 
@@ -187,20 +185,6 @@ const CommentPostWrapper = styled.div`
 const CommentTextStyle = styled.p`
   margin: 0 0 0 48px;
   padding-right: 12px;
-`;
-
-const SlideModalBackground = styled.div`
-  position: fixed;
-  display: flex;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.2);
-  width: 100%;
-  height: 100%;
-  z-index: 999;
-  overflow: hidden;
 `;
 
 export default CommentPost;
