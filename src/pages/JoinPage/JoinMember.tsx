@@ -46,7 +46,7 @@ export default function JoinMember() {
 
     await postJoinImage(formData).then(res => {
       if (res?.data?.filename) {
-        const imageUrl = `https://api.mandarin.weniv.co.kr/${res.data.filename}`;
+        const imageUrl = `${process.env.REACT_APP_API_BASE_URL || 'http://eager-emogene-nigonego-9b3dee94.koyeb.app'}/${res.data.filename}`;
         setUserImage(imageUrl);
       }
     });

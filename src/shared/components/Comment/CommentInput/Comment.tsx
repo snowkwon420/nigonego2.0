@@ -65,7 +65,7 @@ export default function CommentInput({
   useEffect(() => {
     (async () => {
       try {
-        const url = 'https://api.mandarin.weniv.co.kr';
+        const url = process.env.REACT_APP_API_BASE_URL || 'http://eager-emogene-nigonego-9b3dee94.koyeb.app';
         const res = await axios.get(`${url}/user/checktoken`, {
           headers: {
             Authorization: `Bearer ${auth}`,
@@ -84,7 +84,7 @@ export default function CommentInput({
   const onhandlesubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const url = 'https://api.mandarin.weniv.co.kr';
+      const url = process.env.REACT_APP_API_BASE_URL || 'http://eager-emogene-nigonego-9b3dee94.koyeb.app';
       const res = await axios.post(
         `${url}/post/${userId}/comments`,
         {

@@ -24,7 +24,7 @@ export default function HomePostGrid({ accountname }: HomePostGridProps) {
     try {
       axios({
         method: 'GET',
-        url: `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost/?limit=999`,
+        url: `${process.env.REACT_APP_API_BASE_URL || 'http://eager-emogene-nigonego-9b3dee94.koyeb.app'}/post/${accountname}/userpost/?limit=999`,
 
         headers: {
           Authorization: `Bearer ${token}`,

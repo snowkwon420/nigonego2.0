@@ -40,7 +40,7 @@ export default function ProductPage() {
     postJoinImage(formData).then(response => {
       if (response?.data?.filename) {
         setItemImage(
-          `https://api.mandarin.weniv.co.kr/${response.data.filename}`,
+          `${process.env.REACT_APP_API_BASE_URL || 'http://eager-emogene-nigonego-9b3dee94.koyeb.app'}/${response.data.filename}`,
         );
       }
     });

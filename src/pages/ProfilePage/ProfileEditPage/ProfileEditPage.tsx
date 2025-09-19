@@ -60,7 +60,7 @@ export default function ProfileEditPage() {
     if (testID) {
       try {
         const res = await axios.post(
-          'https://api.mandarin.weniv.co.kr/user/accountnamevalid',
+          `${process.env.REACT_APP_API_BASE_URL || 'http://eager-emogene-nigonego-9b3dee94.koyeb.app'}/user/accountnamevalid`,
           {
             user: {
               accountname: userID,
@@ -95,12 +95,13 @@ export default function ProfileEditPage() {
     const formData = new FormData();
     formData.append('image', file);
 
+    const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://eager-emogene-nigonego-9b3dee94.koyeb.app';
     axios({
       method: 'POST',
-      url: 'https://api.mandarin.weniv.co.kr/image/uploadfile',
+      url: `${API_BASE_URL}/image/uploadfile`,
       data: formData,
     }).then(result => {
-      const imageUrl = `https://api.mandarin.weniv.co.kr/${result.data.filename}`;
+      const imageUrl = `${API_BASE_URL}/${result.data.filename}`;
       setUserImage(imageUrl);
     });
   };
@@ -113,7 +114,7 @@ export default function ProfileEditPage() {
       try {
         // API 요청 보내기
         const response = await axios.put(
-          'https://api.mandarin.weniv.co.kr/user',
+          `${process.env.REACT_APP_API_BASE_URL || 'http://eager-emogene-nigonego-9b3dee94.koyeb.app'}/user`,
           {
             user: {
               username: userName,

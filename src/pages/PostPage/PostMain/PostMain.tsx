@@ -28,7 +28,7 @@ function PostMain() {
   const [postData, setPostData] = useState<any>(null);
   const [commentData, setCommentData] = useState<Comment[]>([]);
   const [recentCommentData, setRecentCommentData] = useState<any>('');
-  const url = 'https://api.mandarin.weniv.co.kr';
+  const url = process.env.REACT_APP_API_BASE_URL || 'http://eager-emogene-nigonego-9b3dee94.koyeb.app';
   const postId = location.state.id;
 
   const { getUserData, getCommentData } = useFetchToken();

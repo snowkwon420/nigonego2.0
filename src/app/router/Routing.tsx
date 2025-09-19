@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import StartSplash from '../../pages/SplashPage/StartSplash';
 import LoginMain from '../../pages/LoginMain/LoginMain';
 import LoginPage from '../../pages/LoginPage/LoginPage';
-import JoinPage from '../../pages/JoinPage/JoinMember';
+import JoinPage from '../../pages/JoinPage/JoinPage';
+import JoinMember from '../../pages/JoinPage/JoinMember';
 import HomeFeed from '../../pages/HomeFeed/HomeFeed';
 import ChatPage from '../../pages/ChatPage/ChatPage';
 import ChatRoom from '../../pages/ChatPage/ChatRoom';
@@ -14,7 +15,6 @@ import YourProfilePage from '../../pages/ProfilePage/YourProfilePage/YourProfile
 import ProfileEditPage from '../../pages/ProfilePage/ProfileEditPage/ProfileEditPage';
 import SearchPage from '../../pages/SearchPage/SearchPage';
 import NotFound from '../../pages/NotFound/NotFound';
-import JoinMember from '../../pages/JoinPage/JoinMember';
 import PostMain from '../../pages/PostPage/PostMain/PostMain';
 import HomeBlank from '../../pages/HomePage/HomePage';
 import MyFollowersPage from '../../pages/ProfilePage/MyProfilePage/MyFollowersPage';
