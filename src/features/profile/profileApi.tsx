@@ -1,5 +1,5 @@
 // features/profile/api.ts
-import createAxiosInstance from '@/shared/lib/axios';
+import createAxiosInstance from '../../shared/lib/axios';
 
 // 계정명 중복 검사
 export const postJoinMemberValid = async (

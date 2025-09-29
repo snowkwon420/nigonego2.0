@@ -1,4 +1,4 @@
-import React from 'react';
+
 import SVG from '../../shared/assets/images/404 page.svg';
 import { Image, NotFoundText, NotFoundBtn } from './NotFoundStyle';
 import Layout from '../../app/styles/Layout';

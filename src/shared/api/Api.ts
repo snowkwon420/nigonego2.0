@@ -8,7 +8,7 @@ const createAxiosInstance = (
   imageInstance: AxiosInstance;
   postDataBase: AxiosInstance;
 } => {
-  const baseUrl = 'https://api.mandarin.weniv.co.kr';
+  const baseUrl = process.env.REACT_APP_API_BASE_URL || 'https://eager-emogene-nigonego-9b3dee94.koyeb.app';
 
   const instance: AxiosInstance = axios.create({
     baseURL: baseUrl,

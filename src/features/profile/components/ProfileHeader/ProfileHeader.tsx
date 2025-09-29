@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ProfileUser from './ProfileUser';
 import MyProfileBtn from './MyProfileBtn';
-import UseFetchToken from '../../../../shared/hooks/UseFetchToken';
+import { useProfileAPI } from '../../useProfileApi';
 
 interface UserData {
   // Add properties for userData here
@@ -18,7 +18,7 @@ interface ProfileHeaderProps {
 }
 
 export default function ProfileHeader({ userData, myData }: ProfileHeaderProps) {
-  const { getProfileData } = UseFetchToken();
+  const { getProfileData } = useProfileAPI();
   const [myProfileData, setMyProfileData] = useState({});
 
   const userProfile = myData ? myData : userData;

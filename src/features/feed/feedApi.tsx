@@ -19,3 +19,10 @@ export const getFullFeed = async (token: string) => {
   const response = await instance.get('/post/feed');
   return response.data;
 };
+
+// yourAccount 함수 (getFullFeed와 동일한 기능)
+export const yourAccount = async (token: string) => {
+  const { instance } = createAxiosInstance(token);
+  const response = await instance.get('/post/feed');
+  return response.data;
+};

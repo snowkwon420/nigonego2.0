@@ -9,7 +9,7 @@ import { ReactComponent as HomeIconF } from '../../assets/icons/icon-home-f.svg'
 import { ReactComponent as ChatIconF } from '../../assets/icons/icon-message-circle-f.svg';
 import { ReactComponent as PostIconF } from '../../assets/icons/icon-edit-f.svg';
 import { ReactComponent as ProfileIconF } from '../../assets/icons/icon-user-fill-f.svg';
-import UseFetchToken from '../../hooks/UseFetchToken';
+import { useProfileAPI } from '../../../features/profile/useProfileApi';
 
 interface NavbarProps {
   homeV: boolean;
@@ -20,31 +20,23 @@ interface NavbarProps {
 
 export default function Navbar({ homeV, chatV, postV, profileV }: NavbarProps) {
   const navigate = useNavigate();
-  const [homeFill, setHomeFill] = useState(true);
-  const [chatFill, setChatFill] = useState(true);
-  const [postFill, setPostFill] = useState(true);
-  const [profileFill, setProfileFill] = useState(true);
-  const { getProfileData } = UseFetchToken();
+  const { getProfileData } = useProfileAPI();
   const [userData, setUserData] = useState<any>();
 
   async function handleClick(e: MouseEvent<HTMLButtonElement>) {
     const target = e.target as HTMLButtonElement;
     const value = target.value;
-    
-    if (value == '/homefeed') {
-      setHomeFill(false);
+
+    if (value === '/homefeed') {
       navigate('/homefeed');
-    } else if (value == '/chat') {
-      setChatFill(false);
+    } else if (value === '/chat') {
       navigate('/chat');
-    } else if (value == '/postupload') {
-      setPostFill(false);
+    } else if (value === '/postupload') {
       navigate('/postupload');
-    } else if (value == '/myprofile') {
+    } else if (value === '/myprofile') {
       const res = await getProfileData();
       if (res?.data) {
         setUserData(res.data);
-        setProfileFill(false);
         navigate('/myprofile', {
           state: { userData: res.data },
         });

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import UseFetchToken from '../../../../shared/hooks/UseFetchToken';
+import { usePostApi } from '../../../post/usePostApi';
 import UserSearch from '../../../../shared/components/User/UserSearch';
 import BtnComment from '../../../../shared/assets/image/BtnComment.svg';
 import Heart from '../../../../shared/components/Heart/Heart';
@@ -31,7 +31,7 @@ interface UserData {
 }
 
 export default function MyHomePost({ accountName }: MyHomePostProps) {
-  const { getPostListLimit } = UseFetchToken();
+  const { getPostListLimit } = usePostApi();
   const [userData, setUserData] = useState<UserData[]>([]);
   const postListRef = useRef<HTMLDivElement>(null);
 

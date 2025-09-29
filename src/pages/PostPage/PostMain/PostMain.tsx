@@ -9,7 +9,7 @@ import CommentPost from '../../../shared/components/Comment/CommentPost/CommentP
 import { useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import authAtom from '../../../app/store/authToken';
-import useFetchToken from '../../../shared/hooks/UseFetchToken';
+import { usePostApi } from '../../../features/post/usePostApi';
 import Layout from '../../../app/styles/Layout';
 
 interface Comment {
@@ -31,7 +31,7 @@ function PostMain() {
   const url = 'https://api.mandarin.weniv.co.kr';
   const postId = location.state.id;
 
-  const { getUserData, getCommentData } = useFetchToken();
+  const { getUserData, getCommentData } = usePostApi();
 
   useEffect(() => {
     if (postId && commentData) {

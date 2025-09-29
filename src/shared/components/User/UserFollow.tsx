@@ -4,7 +4,7 @@ import { MImage } from '../UserImage/UserImage';
 import { UserSection, UserName, UserId } from './UserSearch';
 import { ButtonShort } from '../button/Button';
 import { useLocation } from 'react-router-dom';
-import UseFetchToken from '../../hooks/UseFetchToken';
+import { useProfileAPI } from '../../../features/profile/useProfileApi';
 import { useRecoilValue } from 'recoil';
 import atomYourAccount from '../../../app/store/atomYourAccount';
 import accountNameAtom from '../../../app/store/accountName';
@@ -23,7 +23,7 @@ const StyledFollower = styled.section`
 `;
 
 export default function UserFollow() {
-  const { getFollowData } = UseFetchToken();
+  const { getFollowData } = useProfileAPI();
   const myAccount = useRecoilValue(accountNameAtom);
   const yourAccount = useRecoilValue(atomYourAccount);
 

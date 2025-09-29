@@ -10,5 +10,7 @@ export const useFeedAPI = () => {
       feedAPI.getHomeFeed(limit, skip, token),
 
     getFullFeed: () => feedAPI.getFullFeed(token),
+
+    yourAccount: () => feedAPI.yourAccount(token),
   };
 };

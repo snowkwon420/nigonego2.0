@@ -1,4 +1,4 @@
-import React from 'react';
+
 import styled from 'styled-components';
 import { HeaderMainNav } from '../../shared/components/Header/Header';
 import Navbar from '../../shared/components/Navbar/Navbar';

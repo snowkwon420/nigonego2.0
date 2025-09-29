@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { authTokenAtom } from '@/features/auth/store';
+import { authTokenAtom } from '../auth/store';
 import * as profileAPI from './profileApi';
 
 export const useProfileAPI = () => {

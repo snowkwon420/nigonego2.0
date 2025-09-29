@@ -1,4 +1,4 @@
-import createAxiosInstance from '@/shared/lib/axios';
+import createAxiosInstance from '../../shared/lib/axios';
 
 // 상품 리스트 조회 (5개씩 + skip)
 export const getProductListLimit = async (

@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { authTokenAtom } from '@/features/auth/store';
+import { authTokenAtom } from '../auth/store';
 import * as postAPI from './postApi';
 
 export const usePostApi = () => {
@@ -20,5 +20,8 @@ export const usePostApi = () => {
     // 좋아요 & 좋아요 취소
     postHeart: (postId: string) => postAPI.postHeart(postId, token),
     deleteHeart: (postId: string) => postAPI.deleteHeart(postId, token),
+
+    // 댓글 조회
+    getCommentData: (postId: string) => postAPI.getCommentData(postId, token),
   };
 };
