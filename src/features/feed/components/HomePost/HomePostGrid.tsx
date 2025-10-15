@@ -1,6 +1,6 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import HomePostGridList from './HomePostGridList';
+import { usePostApi } from '../../../post/usePostApi';
 
 interface HomePostGridProps {
   accountname: string;
@@ -17,31 +17,43 @@ interface YourProfileData {
 
 export default function HomePostGrid({ accountname }: HomePostGridProps) {
   const [yourProfileData, setYourProfileData] = useState<YourProfileData[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { getPostListLimit } = usePostApi();
 
   useEffect(() => {
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0OGFkMDkxYjJjYjIwNTY2MzM1ZjVmMCIsImV4cCI6MTY5MjAwMjk4NiwiaWF0IjoxNjg2ODE4OTg2fQ.IXRWQpeGB-5D3U3iN4FSKNf2F92wGVA_FLw4SpqLc20';
-    try {
-      axios({
-        method: 'GET',
-        url: `https://api.mandarin.weniv.co.kr/post/${accountname}/userpost/?limit=999`,
-
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
-      }).then(response => {
-        setYourProfileData(response.data.post);
-      });
-    } catch (err) {
-      console.log('에러');
+    if (accountname) {
+      loadPosts();
     }
-  }, []);
+  }, [accountname]);
+
+  const loadPosts = async () => {
+    try {
+      const response = await getPostListLimit(accountname);
+      if (response?.post) {
+        setYourProfileData(response.post);
+      } else if (response?.data?.post) {
+        setYourProfileData(response.data.post);
+      }
+    } catch (error) {
+      // 에러 처리
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return <div style={{ textAlign: 'center', padding: '20px', color: '#767676' }}>로딩 중...</div>;
+  }
 
   return (
     <>
-      {yourProfileData.length > 0 && (
+      {yourProfileData.length > 0 ? (
         <HomePostGridList userPostData={yourProfileData} />
+      ) : (
+        <div style={{ textAlign: 'center', padding: '20px', color: '#767676' }}>
+          게시물이 없습니다.
+        </div>
       )}
     </>
   );

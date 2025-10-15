@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { MImage } from '../UserImage/UserImage';
 import { useNavigate } from 'react-router-dom';
-import UseFetchToken from '../../hooks/UseFetchToken';
+import { useProfileAPI } from '../../../features/profile/useProfileApi';
 
 interface Author {
   image: string;
@@ -18,7 +18,7 @@ interface UserSearchProps {
 
 export default function UserSearch({ data }: UserSearchProps) {
   const navigate = useNavigate();
-  const { getUserFeed } = UseFetchToken();
+  const { getUserFeed } = useProfileAPI();
   const [click, setClick] = useState(false);
   const [userData, setUserData] = useState<any>();
 

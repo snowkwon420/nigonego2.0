@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import ProductItem from './ProductItem';
-import UseFetchToken from '../../../../shared/hooks/UseFetchToken';
+import { useProductAPI } from '../../useProductApi';
 
 const ProductWrapper = styled.div`
   text-align: center;
@@ -48,7 +48,7 @@ interface ProductProps {
 }
 
 export default function Product({ accountName }: ProductProps) {
-  const { getProductListLimit } = UseFetchToken();
+  const { getProductListLimit } = useProductAPI();
   const [userData, setUserData] = useState<Product[]>([]);
   const productListRef = useRef<HTMLDivElement>(null);
   useEffect(() => {

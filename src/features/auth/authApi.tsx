@@ -9,17 +9,16 @@ export const postLogin = async (data: {
   return response.data;
 };
 
-// 2. 이메일 유효성 검사
+// 2. 이메일 유효성 검사 (토큰 불필요)
 export const postJoin = async (
   data: { user: { email: string } },
-  token: string,
 ) => {
-  const { instance } = createAxiosInstance(token);
+  const { instance } = createAxiosInstance();
   const response = await instance.post('/user/emailvalid', data);
   return response.data;
 };
 
-// 3. 회원가입 요청
+// 3. 회원가입 요청 (토큰 불필요)
 export const postJoinMember = async (
   userInfo: {
     username: string;
@@ -29,10 +28,9 @@ export const postJoinMember = async (
     intro: string;
     image: string;
   },
-  token: string,
 ) => {
-  const { instance } = createAxiosInstance(token);
-  const response = await instance.post('/user', userInfo);
+  const { instance } = createAxiosInstance();
+  const response = await instance.post('/user', { user: userInfo });
   return response.data;
 };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import UseFetchToken from '../../../../shared/hooks/UseFetchToken';
+import { usePostApi } from '../../../post/usePostApi';
 import UserSearch from '../../../../shared/components/User/UserSearch';
 import BtnComment from '../../../../shared/assets/image/BtnComment.svg';
 import Heart from '../../../../shared/components/Heart/Heart';
@@ -31,7 +31,7 @@ interface UserData {
 }
 
 export default function MyHomePost({ accountName }: MyHomePostProps) {
-  const { getPostListLimit } = UseFetchToken();
+  const { getPostListLimit } = usePostApi();
   const [userData, setUserData] = useState<UserData[]>([]);
   const postListRef = useRef<HTMLDivElement>(null);
 
@@ -46,14 +46,17 @@ export default function MyHomePost({ accountName }: MyHomePostProps) {
     fetchData(); // 초기 데이터 로드
   }, []);
 
-  const fetchData = () => {
-    getPostListLimit(accountName)
-      .then(res => {
-        if (res && res.data && res.data.post) {
-          setUserData(prevData => [...prevData, ...res.data.post]);
-        }
-      })
-      .catch(error => console.log('에러'));
+  const fetchData = async () => {
+    try {
+      const res = await getPostListLimit(accountName);
+      if (res?.data?.post) {
+        setUserData(prevData => [...prevData, ...res.data.post]);
+      } else if (res?.post) {
+        setUserData(prevData => [...prevData, ...res.post]);
+      }
+    } catch (error) {
+      // 에러 처리
+    }
   };
 
   useEffect(() => {

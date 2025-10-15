@@ -42,13 +42,13 @@ interface ButtonMiddleProps extends React.ButtonHTMLAttributes<HTMLButtonElement
 }
 
 // 중간 버튼
-export const ButtonMiddle: React.FC<ButtonMiddleProps> = ({ 
-  type = 'button', 
-  backgroundColor, 
-  onClick, 
-  border, 
+export const ButtonMiddle: React.FC<ButtonMiddleProps> = ({
+  type = 'button',
+  backgroundColor,
+  onClick,
+  border,
   children,
-  ...props 
+  ...props
 }) => {
   return (
     <ButtonMiddleStyle
@@ -71,15 +71,15 @@ const ButtonMiddleStyle = styled.button<{ $backgroundColor?: string; $border?: b
   border: ${props => (props.$border ? '1px solid gray' : 'none')};
 `;
 
-interface ButtonShortProps {
+interface ButtonShortProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;
   children: ReactNode;
 }
 
 // 짧은 버튼
-export const ButtonShort: React.FC<ButtonShortProps> = ({ disabled, children }) => {
+export const ButtonShort: React.FC<ButtonShortProps> = ({ disabled, children, onClick, ...props }) => {
   return (
-    <ButtonShortStyle disabled={disabled}>
+    <ButtonShortStyle disabled={disabled} onClick={onClick} {...props}>
       {children}
     </ButtonShortStyle>
   );

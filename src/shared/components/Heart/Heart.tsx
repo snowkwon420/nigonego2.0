@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ReactComponent as BtnHeartF } from '../../assets/icons/BtnHeartF.svg';
-import UseFetchToken from '../../hooks/UseFetchToken';
+import { usePostApi } from '../../../features/post/usePostApi';
 
 interface UserData {
   id: string;
@@ -14,7 +14,7 @@ interface HeartProps {
 export default function Heart({ userData }: HeartProps) {
   const [like, setLike] = useState<boolean>(userData.hearted);
   const [likeCount, setLikeCount] = useState<number>(0);
-  const { postHeart, deleteHeart } = UseFetchToken();
+  const { postHeart, deleteHeart } = usePostApi();
 
   const HeartCount = () => {
     setLike(!like);
