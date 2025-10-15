@@ -24,5 +24,15 @@ export const useProfileAPI = () => {
     // 특정 유저 프로필 정보
     getUserFeed: (accountname: string) =>
       profileAPI.getUserFeed(accountname, token),
+
+    // 프로필 수정
+    updateProfile: (data: {
+      user: {
+        username: string;
+        accountname: string;
+        intro: string;
+        image: string;
+      };
+    }) => profileAPI.updateProfile(data, token),
   };
 };

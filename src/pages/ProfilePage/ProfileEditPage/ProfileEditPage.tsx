@@ -1,13 +1,15 @@
-import { useState, FormEvent } from 'react';
+import { useState, useRef } from 'react';
 import { HeaderEditdNav } from '../../../shared/components/Header/Header';
 import ProfileEditContainer from '../../../features/profile/components/ProfileEditContainer';
 
 export default function ProfileEditPage() {
   const [isFormValid, setIsFormValid] = useState(false);
+  const submitRef = useRef<() => void>();
 
   const handleSave = () => {
-    // TODO: Container에서 폼 제출 로직을 호출하도록 개선 필요
-    console.log('Save clicked');
+    if (submitRef.current) {
+      submitRef.current();
+    }
   };
 
   return (
@@ -17,7 +19,10 @@ export default function ProfileEditPage() {
         isFormValid={isFormValid}
         handleSave={handleSave}
       />
-      <ProfileEditContainer />
+      <ProfileEditContainer
+        onValidityChange={setIsFormValid}
+        onSubmitRef={(fn) => { submitRef.current = fn; }}
+      />
     </>
   );
 }

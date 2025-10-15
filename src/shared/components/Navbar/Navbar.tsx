@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { NavbarWrapper } from './NavbarStyle';
 import { ReactComponent as HomeIcon } from '../../assets/icons/icon-home-fill.svg';
@@ -9,7 +9,6 @@ import { ReactComponent as HomeIconF } from '../../assets/icons/icon-home-f.svg'
 import { ReactComponent as ChatIconF } from '../../assets/icons/icon-message-circle-f.svg';
 import { ReactComponent as PostIconF } from '../../assets/icons/icon-edit-f.svg';
 import { ReactComponent as ProfileIconF } from '../../assets/icons/icon-user-fill-f.svg';
-import { useProfileAPI } from '../../../features/profile/useProfileApi';
 
 interface NavbarProps {
   homeV: boolean;
@@ -20,27 +19,15 @@ interface NavbarProps {
 
 export default function Navbar({ homeV, chatV, postV, profileV }: NavbarProps) {
   const navigate = useNavigate();
-  const { getProfileData } = useProfileAPI();
-  const [userData, setUserData] = useState<any>();
 
-  async function handleClick(e: MouseEvent<HTMLButtonElement>) {
-    const target = e.target as HTMLButtonElement;
+  function handleClick(e: MouseEvent<HTMLButtonElement>) {
+    const target = e.currentTarget as HTMLButtonElement;
     const value = target.value;
 
-    if (value === '/homefeed') {
-      navigate('/homefeed');
-    } else if (value === '/chat') {
-      navigate('/chat');
-    } else if (value === '/postupload') {
-      navigate('/postupload');
-    } else if (value === '/myprofile') {
-      const res = await getProfileData();
-      if (res?.data) {
-        setUserData(res.data);
-        navigate('/myprofile', {
-          state: { userData: res.data },
-        });
-      }
+    // 간단하게 페이지로 이동만 처리
+    // 각 페이지에서 필요한 데이터를 로드하도록 함
+    if (value) {
+      navigate(value);
     }
   }
 

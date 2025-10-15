@@ -1,6 +1,7 @@
 import createAxiosInstance from '../../shared/lib/axios';
+import { PRODUCTS_PER_PAGE } from '../../shared/constants/pagination';
 
-// 상품 리스트 조회 (5개씩 + skip)
+// 상품 리스트 조회
 export const getProductListLimit = async (
   skip: number,
   accountname: string,
@@ -8,7 +9,7 @@ export const getProductListLimit = async (
 ) => {
   const { instance } = createAxiosInstance(token);
   const response = await instance.get(
-    `/product/${accountname}/?limit=5&skip=${skip}`,
+    `/product/${accountname}/?limit=${PRODUCTS_PER_PAGE}&skip=${skip}`,
   );
   return response.data;
 };

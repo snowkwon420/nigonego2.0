@@ -42,3 +42,20 @@ export const getUserFeed = async (accountname: string, token: string) => {
   const response = await instance.get(`/profile/${accountname}`);
   return response.data;
 };
+
+// 프로필 수정
+export const updateProfile = async (
+  data: {
+    user: {
+      username: string;
+      accountname: string;
+      intro: string;
+      image: string;
+    };
+  },
+  token: string,
+) => {
+  const { instance } = createAxiosInstance(token);
+  const response = await instance.put('/user', data);
+  return response.data;
+};

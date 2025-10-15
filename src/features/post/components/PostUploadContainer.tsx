@@ -1,28 +1,48 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useState, useEffect, useCallback, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import BodyGlobal from '../../../app/styles/BodyGlobal';
 import FileUploadInput from '../../../shared/components/Input/FileUploadInput';
 import UserProfileCircle from '../../../shared/components/User/UserProfileCircle';
 import { usePostApi } from '../usePostApi';
+import { useImageUpload } from '../../../shared/hooks/useImageUpload';
 
-function PostUploadContainer() {
+interface PostUploadContainerProps {
+  onValidityChange: (isValid: boolean) => void;
+  onSubmitRef: (fn: () => void) => void;
+}
+
+function PostUploadContainer({ onValidityChange, onSubmitRef }: PostUploadContainerProps) {
   const navigate = useNavigate();
 
-  const [isFormValid, setIsFormValid] = useState(false);
   const [content, setContent] = useState('');
   const [image, setImage] = useState('');
 
   const { postPostUpload } = usePostApi();
+  const { uploadImage } = useImageUpload();
 
-  // 폼 유효성 검사
+  // 폼 유효성 검사 및 부모 컴포넌트에 전달
   useEffect(() => {
-    if (content && image) {
-      setIsFormValid(true);
-    } else {
-      setIsFormValid(false);
+    const isValid = content.trim() !== '' && image !== '';
+    onValidityChange(isValid);
+  }, [content, image, onValidityChange]);
+
+  // 실제 업로드 로직
+  const handleSubmitClick = useCallback(async () => {
+    if (content.trim() === '' || image === '') return;
+
+    try {
+      await postPostUpload(content, image);
+      navigate('/homefeed');
+    } catch (error) {
+      console.error('게시물 업로드 실패:', error);
     }
-  }, [content, image]);
+  }, [content, image, postPostUpload, navigate]);
+
+  // submit 함수를 부모에게 전달
+  useEffect(() => {
+    onSubmitRef(handleSubmitClick);
+  }, [handleSubmitClick, onSubmitRef]);
 
   // 이미지 업로드 핸들러
   const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,37 +51,16 @@ function PostUploadContainer() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append('image', file);
-
-    try {
-      // TODO: 이미지 업로드 API를 공통 기능으로 분리 필요
-      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://eager-emogene-nigonego-9b3dee94.koyeb.app';
-      const response = await fetch(`${API_BASE_URL}/image/uploadfile`, {
-        method: 'POST',
-        body: formData,
-      });
-      const result = await response.json();
-      if (result.filename) {
-        setImage(`${API_BASE_URL}/${result.filename}`);
-      }
-    } catch (error) {
-      console.error('Image upload error:', error);
+    const imageUrl = await uploadImage(file);
+    if (imageUrl) {
+      setImage(imageUrl);
     }
   };
 
-  // 게시물 업로드 제출
+  // 게시물 업로드 제출 (form submit)
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!isFormValid) return;
-
-    try {
-      await postPostUpload(content, image);
-      navigate('/myprofile');
-    } catch (error) {
-      console.error('Post upload error:', error);
-    }
+    await handleSubmitClick();
   };
 
   return (

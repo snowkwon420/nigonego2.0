@@ -1,5 +1,4 @@
-import { useState, MouseEvent } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect, MouseEvent } from 'react';
 import styled from 'styled-components';
 import MyHomePost from '../../feed/components/HomePost/MyHomePost';
 import Product from '../../product/components/Product/Product';
@@ -8,15 +7,37 @@ import BodyGlobal from '../../../app/styles/BodyGlobal';
 import { ReactComponent as BtnVertical } from '../../../shared/assets/image/BtnVertical.svg';
 import { ReactComponent as BtnGrid } from '../../../shared/assets/image/BtnGrid.svg';
 import HomePostGrid from '../../feed/components/HomePost/HomePostGrid';
+import { useProfileAPI } from '../useProfileApi';
 
 function MyProfileContainer() {
   const [isClickedList, setIsClickedList] = useState(true);
   const [isClickedGrid, setIsClickedGrid] = useState(false);
+  const [userData, setUserData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Navbar에서 전달받은 사용자 데이터
-  const location = useLocation();
-  const accountName = location.state?.userData?.user?.accountname;
-  const userData = location.state?.userData?.user;
+  const { getProfileData } = useProfileAPI();
+
+  // 프로필 데이터 로드
+  useEffect(() => {
+    loadProfileData();
+  }, []);
+
+  const loadProfileData = async () => {
+    try {
+      const response = await getProfileData();
+      if (response?.user) {
+        setUserData(response.user);
+      } else if (response?.data?.user) {
+        setUserData(response.data.user);
+      }
+    } catch (error) {
+      // 에러 처리
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const accountName = userData?.accountname;
 
   // 리스트 뷰 클릭 핸들러
   const handleClickList = (e: MouseEvent<HTMLButtonElement>) => {
@@ -35,6 +56,15 @@ function MyProfileContainer() {
       setIsClickedList(false);
     }
   };
+
+  // 로딩 중
+  if (isLoading) {
+    return (
+      <BodyGlobal>
+        <LoadingMessage>프로필을 불러오는 중...</LoadingMessage>
+      </BodyGlobal>
+    );
+  }
 
   // 데이터가 없는 경우 에러 처리
   if (!userData || !accountName) {
@@ -97,6 +127,13 @@ const ImgAlignNav = styled.div`
       opacity: 0.7;
     }
   }
+`;
+
+const LoadingMessage = styled.div`
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--basic-grey);
+  font-size: 16px;
 `;
 
 const ErrorMessage = styled.div`

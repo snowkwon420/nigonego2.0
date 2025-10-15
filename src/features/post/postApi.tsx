@@ -48,10 +48,3 @@ export const deleteHeart = async (postId: string, token: string) => {
   const response = await instance.delete(`/post/${postId}/unheart`);
   return response.data;
 };
-
-// 게시글 댓글 조회
-export const getCommentData = async (postId: string, token: string) => {
-  const { instance } = createAxiosInstance(token);
-  const response = await instance.get(`/post/${postId}/comments`);
-  return response.data;
-};

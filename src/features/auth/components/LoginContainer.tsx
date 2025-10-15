@@ -1,13 +1,16 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import Input from '../../../shared/components/Input/Input';
-import { followingAtom } from '../../../app/store/atoms';
-import authAtom from '../../../app/store/authToken';
-import accountNameAtom from '../../../app/store/accountName';
+import { authTokenAtom, accountNameAtom } from '../store';
 import { ButtonLong } from '../../../shared/components/button/Button';
-import { useAuthAPI } from '../useAuthApi';
+import * as authAPI from '../authApi';
 import { FormWrapper } from '../../../pages/LoginPage/LoginPage';
+import {
+  validateEmail,
+  validatePassword,
+  getEmailErrorMessage,
+} from '../../../shared/utils/validation';
 
 function LoginContainer() {
   const [email, setEmail] = useState<string>('');
@@ -19,47 +22,37 @@ function LoginContainer() {
   const [loginErrMessage, setLoginErrMessage] = useState<string>('');
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
-  const [auth, setAuth] = useRecoilState(authAtom);
-  const [accountname, setAccountname] = useRecoilState(accountNameAtom);
-  const [following, setFollowing] = useRecoilState(followingAtom);
-
-  const { postLogin } = useAuthAPI();
+  const setAuth = useSetRecoilState(authTokenAtom);
+  const setAccountname = useSetRecoilState(accountNameAtom);
   const navigate = useNavigate();
 
   // 이메일 검증
   function emailCheck(event: ChangeEvent<HTMLInputElement>) {
-    setEmail(event.target.value);
-    const testEmail =
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(
-        event.target.value,
-      );
-    if (event.target.value === '') {
+    const value = event.target.value;
+    setEmail(value);
+
+    if (value === '') {
       setEmailErrMsg('');
+      setIsEmailValid(false);
     } else {
-      if (testEmail) {
-        setIsEmailValid(true);
-        setEmailErrMsg('');
-      } else {
-        setIsEmailValid(false);
-        setEmailErrMsg('올바르지 않은 이메일 형식입니다.');
-      }
+      const isValid = validateEmail(value);
+      setIsEmailValid(isValid);
+      setEmailErrMsg(isValid ? '' : getEmailErrorMessage(value));
     }
   }
 
   // 패스워드 검증
   function passwordCheck(event: ChangeEvent<HTMLInputElement>) {
-    setPassword(event.target.value);
-    const testPassword = /^[A-Za-z0-9]{5,20}$/;
-    if (event.target.value === '') {
+    const value = event.target.value;
+    setPassword(value);
+
+    if (value === '') {
       setLoginErrMessage('');
+      setIsPasswordValid(false);
     } else {
-      if (!event.target.value.match(testPassword)) {
-        setIsPasswordValid(false);
-        setLoginErrMessage('비밀번호 5자 이상 입력하세요');
-      } else {
-        setIsPasswordValid(true);
-        setLoginErrMessage('');
-      }
+      const isValid = validatePassword(value);
+      setIsPasswordValid(isValid);
+      setLoginErrMessage(isValid ? '' : '비밀번호는 6~20자 이내로 입력해주세요.');
     }
   }
 
@@ -72,7 +65,7 @@ function LoginContainer() {
   // 로그인 요청
   const submitHandler = async () => {
     try {
-      const res = await postLogin({ user: { email, password } });
+      const res = await authAPI.postLogin({ user: { email, password } });
       if (res?.user) {
         const { token, accountname } = res.user;
         setAuth(token);
@@ -85,7 +78,6 @@ function LoginContainer() {
     } catch (error) {
       setIsCorrect(false);
       setLoginErrMessage('*이메일 또는 비밀번호가 일치하지 않습니다.');
-      console.error('Login error:', error);
     }
   };
 

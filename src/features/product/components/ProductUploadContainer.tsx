@@ -37,7 +37,7 @@ function ProductUploadContainer() {
 
     try {
       // TODO: 이미지 업로드 API를 공통 기능으로 분리 필요
-      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://eager-emogene-nigonego-9b3dee94.koyeb.app';
+      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://eager-emogene-nigonego-9b3dee94.koyeb.app';
       const response = await fetch(`${API_BASE_URL}/image/uploadfile`, {
         method: 'POST',
         body: formData,

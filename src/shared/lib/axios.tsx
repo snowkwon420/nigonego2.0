@@ -1,30 +1,44 @@
 import axios from 'axios';
-
-const BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://eager-emogene-nigonego-9b3dee94.koyeb.app';
+import { API_BASE_URL } from '../constants/api';
 
 const createAxiosInstance = (token?: string) => {
-  const headers = token
-    ? { Authorization: `Bearer ${token}`, 'Content-type': 'application/json' }
-    : { 'Content-type': 'application/json' };
+  // 기본 헤더 설정
+  const baseHeaders = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+  };
 
-  // 일반 요청용
+  const authHeaders = token
+    ? { ...baseHeaders, Authorization: `Bearer ${token}` }
+    : baseHeaders;
+
+  // 일반 요청용 인스턴스
   const instance = axios.create({
-    baseURL: BASE_URL,
-    headers,
+    baseURL: API_BASE_URL,
+    headers: authHeaders,
+    timeout: 30000,
+    withCredentials: false,
   });
 
-  // 이미지 업로드용
+  // 이미지 업로드용 인스턴스
   const imageInstance = axios.create({
-    baseURL: BASE_URL,
+    baseURL: API_BASE_URL,
     headers: {
-      Authorization: token ? `Bearer ${token}` : '',
-      'Content-type': 'multipart/form-data',
+      ...(token && { Authorization: `Bearer ${token}` }),
     },
+    timeout: 60000,
+    withCredentials: false,
   });
+
+  // 에러 처리 인터셉터
+  instance.interceptors.response.use(
+    (response) => response,
+    (error) => Promise.reject(error)
+  );
 
   return {
-    instance, // 기본 요청용
-    imageInstance, // 이미지 업로드 전용
+    instance,
+    imageInstance,
   };
 };
 

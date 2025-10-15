@@ -9,21 +9,13 @@ export const useAuthAPI = () => {
     // 로그인 (token 불필요)
     postLogin: authAPI.postLogin,
 
-    // 이메일 유효성 검사 (token 필요)
-    postJoin: (data: { user: { email: string } }) =>
-      authAPI.postJoin(data, token),
+    // 이메일 유효성 검사 (token 불필요)
+    postJoin: authAPI.postJoin,
 
-    // 회원가입
-    postJoinMember: (userInfo: {
-      username: string;
-      email: string;
-      password: string;
-      accountname: string;
-      intro: string;
-      image: string;
-    }) => authAPI.postJoinMember(userInfo, token),
+    // 회원가입 (token 불필요)
+    postJoinMember: authAPI.postJoinMember,
 
-    // 내 정보 가져오기
+    // 내 정보 가져오기 (token 필요)
     getUserInfo: () => authAPI.getUserInfo(token),
   };
 };

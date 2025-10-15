@@ -20,8 +20,5 @@ export const usePostApi = () => {
     // 좋아요 & 좋아요 취소
     postHeart: (postId: string) => postAPI.postHeart(postId, token),
     deleteHeart: (postId: string) => postAPI.deleteHeart(postId, token),
-
-    // 댓글 조회
-    getCommentData: (postId: string) => postAPI.getCommentData(postId, token),
   };
 };

@@ -10,9 +10,10 @@ import { useNavigate } from 'react-router-dom';
 interface HeaderBasicNavProps {
   children?: ReactNode;
   disabled?: boolean;
+  onClick?: () => void;
 }
 
-export function HeaderBasicNav({ children, disabled }: HeaderBasicNavProps) {
+export function HeaderBasicNav({ children, disabled, onClick }: HeaderBasicNavProps) {
   //뒤로가기 구현
   const navigate = useNavigate();
   const handleBack = () => {
@@ -31,7 +32,9 @@ export function HeaderBasicNav({ children, disabled }: HeaderBasicNavProps) {
       {!isPostUpLoad && !isProductUpLoad ? (
         <MoreIconButton />
       ) : (
-        <ButtonShort disabled={disabled}>{children}</ButtonShort>
+        <ButtonShort disabled={disabled} onClick={onClick}>
+          {children}
+        </ButtonShort>
       )}
     </HeaderDefaultStyle>
   );

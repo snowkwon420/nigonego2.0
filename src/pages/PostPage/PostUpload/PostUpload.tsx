@@ -1,20 +1,29 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { HeaderBasicNav } from '../../../shared/components/Header/Header';
 import PostUploadContainer from '../../../features/post/components/PostUploadContainer';
 
+/**
+ * 게시물 업로드 페이지
+ */
 export default function PostUpload() {
   const [isFormValid, setIsFormValid] = useState(false);
+  const submitRef = useRef<() => void>();
 
-  // TODO: Container에서 폼 유효성 상태를 받아오도록 개선 필요
-  useEffect(() => {
-    // 임시로 항상 false로 설정
-    setIsFormValid(false);
-  }, []);
+  const handleUploadClick = () => {
+    if (submitRef.current) {
+      submitRef.current();
+    }
+  };
 
   return (
     <>
-      <HeaderBasicNav disabled={!isFormValid}>업로드</HeaderBasicNav>
-      <PostUploadContainer />
+      <HeaderBasicNav disabled={!isFormValid} onClick={handleUploadClick}>
+        업로드
+      </HeaderBasicNav>
+      <PostUploadContainer
+        onValidityChange={setIsFormValid}
+        onSubmitRef={(fn) => { submitRef.current = fn; }}
+      />
     </>
   );
 }

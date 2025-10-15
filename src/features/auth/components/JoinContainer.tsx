@@ -4,6 +4,12 @@ import Input from '../../../shared/components/Input/Input';
 import { ButtonLong } from '../../../shared/components/button/Button';
 import { FormWrapper } from '../../../pages/LoginPage/LoginPage';
 import { useAuthAPI } from '../useAuthApi';
+import {
+  validateEmail,
+  validatePassword,
+  getEmailErrorMessage,
+  getPasswordErrorMessage,
+} from '../../../shared/utils/validation';
 
 function JoinContainer() {
   const [email, setEmail] = useState('');
@@ -18,34 +24,29 @@ function JoinContainer() {
 
   // 이메일 검증
   function emailCheck(event: ChangeEvent<HTMLInputElement>) {
-    const testEmail =
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(
-        event.target.value,
-      );
-    if (event.target.value === '') {
+    const value = event.target.value;
+
+    if (value === '') {
       setIsEmailValid(null);
       setErrorMessageEM('');
-    } else if (testEmail) {
-      setIsEmailValid(true);
-      setErrorMessageEM('');
     } else {
-      setIsEmailValid(false);
-      setErrorMessageEM('*이메일 형식이 유효하지 않습니다.');
+      const isValid = validateEmail(value);
+      setIsEmailValid(isValid);
+      setErrorMessageEM(isValid ? '' : getEmailErrorMessage(value));
     }
   }
 
   // 비밀번호 검증
   function passwordCheck(event: ChangeEvent<HTMLInputElement>) {
-    const testPassword = /^[A-Za-z0-9]{6,20}$/;
-    if (event.target.value === '') {
+    const value = event.target.value;
+
+    if (value === '') {
       setIsPasswordValid(null);
       setErrorMessagePW('');
-    } else if (event.target.value.match(testPassword)) {
-      setIsPasswordValid(true);
-      setErrorMessagePW('');
     } else {
-      setIsPasswordValid(false);
-      setErrorMessagePW('*비밀번호는 6자 이상이어야 합니다.');
+      const isValid = validatePassword(value);
+      setIsPasswordValid(isValid);
+      setErrorMessagePW(isValid ? '' : getPasswordErrorMessage(value));
     }
   }
 
@@ -65,7 +66,6 @@ function JoinContainer() {
         });
       }
     } catch (error) {
-      console.error('Join error:', error);
       setIsEmailValid(false);
       setErrorMessageEM('*이메일 확인 중 오류가 발생했습니다.');
     }

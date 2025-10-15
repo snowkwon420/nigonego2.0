@@ -1,34 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import HomePost from './HomePost/HomePost';
-import HomePage from '../../../pages/HomePage/HomePage';
 import { useFeedAPI } from '../useFeedApi';
+import { Post } from '../../../shared/types';
+import { POSTS_PER_PAGE, SCROLL_THRESHOLD } from '../../../shared/constants/pagination';
 
-interface PostData {
-  id: string;
-  author: {
-    _id: string;
-    username: string;
-    accountname: string;
-    intro: string;
-    image: string;
-    following: string[];
-    follower: string[];
-    followerCount: number;
-    followingCount: number;
-  };
-  content: string;
-  image: string;
-  heartCount: number;
-  hearted: boolean;
-  commentCount: number;
-  createdAt: string;
-  updatedAt?: string;
-  index?: number;
-}
-
-function HomeFeedContainer() {
-  const [userData, setUserData] = useState<PostData[]>([]);
+/**
+ * 팔로잉한 유저가 있을 때 게시물을 표시하는 컴포넌트
+ */
+function HomeFeedWithPosts() {
+  const [userData, setUserData] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const postListRef = useRef<HTMLDivElement>(null);
 
@@ -41,16 +22,19 @@ function HomeFeedContainer() {
 
   // 데이터 fetching 함수
   const fetchData = async (skip: number) => {
-    if (isLoading) return; // 중복 요청 방지
+    if (isLoading) return;
 
     setIsLoading(true);
     try {
-      const response = await getHomeFeed(5, skip);
+      const response = await getHomeFeed(POSTS_PER_PAGE, skip);
+
       if (response?.posts) {
         setUserData(prevData => [...prevData, ...response.posts]);
+      } else if (Array.isArray(response)) {
+        setUserData(prevData => [...prevData, ...response]);
       }
     } catch (error) {
-      console.error('Feed data fetch error:', error);
+      // 에러 발생 시 빈 상태 유지
     } finally {
       setIsLoading(false);
     }
@@ -62,8 +46,7 @@ function HomeFeedContainer() {
       const container = postListRef.current;
       if (container && !isLoading) {
         const { scrollTop, clientHeight, scrollHeight } = container;
-        // 스크롤이 거의 끝에 도달했을 때 (100px 여유)
-        if (scrollTop + clientHeight >= scrollHeight - 100) {
+        if (scrollTop + clientHeight >= scrollHeight - SCROLL_THRESHOLD) {
           const skip = userData.length;
           fetchData(skip);
         }
@@ -83,24 +66,33 @@ function HomeFeedContainer() {
   }, [userData, isLoading]);
 
   return (
-    <MyHomePostWrapper ref={postListRef} className="myHomePost">
-      {userData.length > 0 ? (
-        userData.map((data, index) => (
-          <HomePost data={data} key={data.id || index} />
-        ))
-      ) : (
-        <HomePage />
-      )}
-      {isLoading && (
+    <PostListWrapper ref={postListRef}>
+      {isLoading && userData.length === 0 ? (
         <LoadingWrapper>
-          <p>로딩 중...</p>
+          <p>피드를 불러오는 중...</p>
         </LoadingWrapper>
+      ) : userData.length > 0 ? (
+        <>
+          {userData.map((data, index) => (
+            <HomePost data={data} key={data.id || index} />
+          ))}
+          {isLoading && (
+            <LoadingWrapper>
+              <p>더 불러오는 중...</p>
+            </LoadingWrapper>
+          )}
+        </>
+      ) : (
+        <EmptyPostsWrapper>
+          <p>팔로우한 유저가 아직 게시물을 작성하지 않았습니다.</p>
+          <p>조금만 기다려주세요! 😊</p>
+        </EmptyPostsWrapper>
       )}
-    </MyHomePostWrapper>
+    </PostListWrapper>
   );
 }
 
-const MyHomePostWrapper = styled.div`
+const PostListWrapper = styled.div`
   height: 86vh;
   padding-bottom: 20px;
   overflow: scroll;
@@ -137,4 +129,15 @@ const LoadingWrapper = styled.div`
   color: var(--basic-grey);
 `;
 
-export default HomeFeedContainer;
+const EmptyPostsWrapper = styled.div`
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--basic-grey);
+  
+  p {
+    margin: 10px 0;
+    font-size: 14px;
+  }
+`;
+
+export default HomeFeedWithPosts;
