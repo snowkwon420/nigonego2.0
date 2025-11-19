@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Navbar from '../../shared/components/Navbar/Navbar';
 import { HeaderBasicNav } from '../../shared/components/Header/Header';
@@ -16,10 +16,11 @@ function HomeFeed() {
 
   useEffect(() => {
     checkFollowingStatus();
-  }, [checkFollowingStatus]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // 팔로잉 상태 확인
-  const checkFollowingStatus = useCallback(async () => {
+  const checkFollowingStatus = async () => {
     try {
       const response = await getUserInfo();
       const user = response?.user || response?.data?.user;
@@ -32,7 +33,7 @@ function HomeFeed() {
     } finally {
       setIsChecking(false);
     }
-  }, [getUserInfo]);
+  };
 
   return (
     <>
