@@ -1,9 +1,9 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { followingAtom } from '../../../app/store/atoms';
 import accountNameAtom from '../../../app/store/accountName';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useResetRecoilState } from 'recoil';
 import authAtom from '../../../app/store/authToken';
 
 export default function Modal() {
@@ -42,10 +42,6 @@ interface LogoutModalProps {
 }
 
 export function LogoutModal({ onClose }: LogoutModalProps) {
-  const [auth, setAuth] = useRecoilState(authAtom);
-  const [accountname, setAccountnameAtom] = useRecoilState(accountNameAtom);
-  const [following, setFollowing] = useRecoilState(followingAtom);
-
   const resetAuth = useResetRecoilState(authAtom);
   const resetAccount = useResetRecoilState(accountNameAtom);
   const resetFollowing = useResetRecoilState(followingAtom);

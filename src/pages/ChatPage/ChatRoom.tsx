@@ -1,25 +1,19 @@
 import React, { useState, ChangeEvent } from 'react';
-import axios from 'axios';
 import { HeaderChatNav } from '../../shared/components/Header/Header';
 import {
-  ChatNav,
-  ChattingForm,
-  ChattingSend,
   SenderWrapper,
   ChatMessageTime,
   ChatWrapper,
   UserWrapper,
-  MyChatting,
   SenderMessage,
   UserMessage,
   CommonWrapper,
-  UploadButtonStyle,
 } from './ChatRoomStyle';
 import { CommentWrapper } from '../../shared/components/Comment/CommentInput/Comment';
 import { SImage } from '../../shared/components/UserImage/UserImage';
 import buttonImg from '../../shared/assets/images/upload-file.svg';
 import BodyGlobal from '../../app/styles/BodyGlobal';
-import Layout from "../../app/styles/Layout";
+import Layout from '../../app/styles/Layout';
 
 export default function ChatRoom() {
   const [comment, setComment] = useState('');

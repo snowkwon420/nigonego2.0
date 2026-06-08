@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { MImage } from '../UserImage/UserImage';
 import { useNavigate } from 'react-router-dom';
@@ -19,24 +19,18 @@ interface UserSearchProps {
 export default function UserSearch({ data }: UserSearchProps) {
   const navigate = useNavigate();
   const { getUserFeed } = useProfileAPI();
-  const [click, setClick] = useState(false);
-  const [userData, setUserData] = useState<any>();
 
-  useEffect(() => {
-    if (click) {
+  async function moveToYourProfile() {
+    try {
+      await getUserFeed(data.author.accountname);
+      navigate('/yourprofile', {
+        state: { data },
+      });
+    } catch (error) {
       navigate('/yourprofile', {
         state: { data },
       });
     }
-  }, [click]);
-
-  function moveToYourProfile(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    getUserFeed(data.author.accountname).then(res => {
-      setClick(true);
-      if (res) {
-        setUserData(res);
-      }
-    });
   }
 
   return (

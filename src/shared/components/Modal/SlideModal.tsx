@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, MouseEvent } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import slideIcon from '../../assets/icons/slide-top-icon.png';
-import { LogoutModal, CommentModal } from './Modal';
+import { LogoutModal } from './Modal';
 
 interface SlideModalProps {
   closeModal: (event: MouseEvent<HTMLDivElement>) => void;

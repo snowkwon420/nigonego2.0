@@ -14,7 +14,7 @@ interface SearchData {
 }
 
 function SearchPage() {
-  const [data, setData] = useState<SearchData | null>(null);
+  const [data] = useState<SearchData | null>(null);
   
   return (
     <Layout>

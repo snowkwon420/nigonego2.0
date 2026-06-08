@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import HomePost from '../../feed/components/HomePost/HomePost';
 import CommentInput from '../../../shared/components/Comment/CommentInput/Comment';
@@ -22,15 +22,8 @@ function PostDetailContainer({ postId }: PostDetailContainerProps) {
   const { getUserData } = usePostApi();
   const { getCommentList } = useCommentAPI();
 
-  useEffect(() => {
-    if (postId) {
-      getData();
-      getComment();
-    }
-  }, [postId]);
-
   // 게시물 데이터 가져오기
-  const getData = async () => {
+  const getData = useCallback(async () => {
     try {
       const response = await getUserData(postId);
 
@@ -42,10 +35,10 @@ function PostDetailContainer({ postId }: PostDetailContainerProps) {
     } catch (error) {
       // 에러 처리
     }
-  };
+  }, [getUserData, postId]);
 
   // 댓글 데이터 가져오기
-  const getComment = async () => {
+  const getComment = useCallback(async () => {
     try {
       const response = await getCommentList(postId);
 
@@ -64,7 +57,14 @@ function PostDetailContainer({ postId }: PostDetailContainerProps) {
     } catch (error) {
       // 에러 처리
     }
-  };
+  }, [getCommentList, postId, recentCommentData]);
+
+  useEffect(() => {
+    if (postId) {
+      getData();
+      getComment();
+    }
+  }, [postId, getData, getComment]);
 
   return (
     <Wrapper>

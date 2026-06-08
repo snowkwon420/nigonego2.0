@@ -38,12 +38,7 @@ function ProfileEditContainer({ onValidityChange, onSubmitRef }: ProfileEditCont
   const { postJoinMemberValid, getProfileData, updateProfile } = useProfileAPI();
   const { uploadImage } = useImageUpload();
 
-  // 기존 프로필 데이터 로드
-  useEffect(() => {
-    loadProfileData();
-  }, []);
-
-  const loadProfileData = async () => {
+  const loadProfileData = useCallback(async () => {
     try {
       const response = await getProfileData();
       const user = response?.user || response?.data?.user;
@@ -60,7 +55,12 @@ function ProfileEditContainer({ onValidityChange, onSubmitRef }: ProfileEditCont
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [getProfileData]);
+
+  // 기존 프로필 데이터 로드
+  useEffect(() => {
+    loadProfileData();
+  }, [loadProfileData]);
 
   // 사용자 이름 변경
   const handleUserNameChange = (e: ChangeEvent<HTMLInputElement>) => {

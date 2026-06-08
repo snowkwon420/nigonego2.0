@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import HomePost from './HomePost/HomePost';
 import { useFeedAPI } from '../useFeedApi';
@@ -15,13 +15,8 @@ function HomeFeedWithPosts() {
 
   const { getHomeFeed } = useFeedAPI();
 
-  // 초기 데이터 로드
-  useEffect(() => {
-    fetchData(0);
-  }, []);
-
   // 데이터 fetching 함수
-  const fetchData = async (skip: number) => {
+  const fetchData = useCallback(async (skip: number) => {
     if (isLoading) return;
 
     setIsLoading(true);
@@ -38,7 +33,12 @@ function HomeFeedWithPosts() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [getHomeFeed, isLoading]);
+
+  // 초기 데이터 로드
+  useEffect(() => {
+    fetchData(0);
+  }, [fetchData]);
 
   // 무한 스크롤 처리
   useEffect(() => {
@@ -63,7 +63,7 @@ function HomeFeedWithPosts() {
         postList.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [userData, isLoading]);
+  }, [userData, isLoading, fetchData]);
 
   return (
     <PostListWrapper ref={postListRef}>
