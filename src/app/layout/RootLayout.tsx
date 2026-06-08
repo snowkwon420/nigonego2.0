@@ -1,15 +1,19 @@
 /* eslint-disable react/jsx-filename-extension */
 import { RecoilRoot } from 'recoil';
+import { QueryClientProvider } from '@tanstack/react-query';
 import Routing from '../router/Routing';
 import GlobalStyle from '../styles/globalstyle';
 import styled from 'styled-components';
+import { queryClient } from '../../shared/lib/queryClient';
 
 const RootLayout: React.FC = () => {
   return (
     <Wrap>
       <RecoilRoot>
-        <GlobalStyle />
-        <Routing />
+        <QueryClientProvider client={queryClient}>
+          <GlobalStyle />
+          <Routing />
+        </QueryClientProvider>
       </RecoilRoot>
     </Wrap>
   );

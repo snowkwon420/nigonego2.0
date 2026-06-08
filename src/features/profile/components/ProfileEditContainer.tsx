@@ -11,6 +11,7 @@ import BodyGlobal from '../../../app/styles/BodyGlobal';
 import FileUploadInput from '../../../shared/components/Input/FileUploadInput';
 import { useProfileAPI } from '../useProfileApi';
 import { useImageUpload } from '../../../shared/hooks/useImageUpload';
+import { useMyProfileQuery, useUpdateProfileMutation } from '../profileQueries';
 import {
   validateUsername,
   validateAccountId,
@@ -31,36 +32,23 @@ function ProfileEditContainer({ onValidityChange, onSubmitRef }: ProfileEditCont
   const [isUserIDValid, setIsUserIDValid] = useState(true);
   const [errorMessageID, setErrorMessageID] = useState('');
   const [userImage, setUserImage] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
   const [originalAccountname, setOriginalAccountname] = useState('');
 
   const navigate = useNavigate();
-  const { postJoinMemberValid, getProfileData, updateProfile } = useProfileAPI();
+  const { postJoinMemberValid } = useProfileAPI();
   const { uploadImage } = useImageUpload();
+  const { data: profileData, isLoading } = useMyProfileQuery();
+  const updateProfileMutation = useUpdateProfileMutation();
 
-  const loadProfileData = useCallback(async () => {
-    try {
-      const response = await getProfileData();
-      const user = response?.user || response?.data?.user;
-
-      if (user) {
-        setUserName(user.username || '');
-        setUserID(user.accountname || '');
-        setOriginalAccountname(user.accountname || '');
-        setUserIntro(user.intro || '');
-        setUserImage(user.image || '');
-      }
-    } catch (error) {
-      console.error('프로필 로드 실패:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [getProfileData]);
-
-  // 기존 프로필 데이터 로드
   useEffect(() => {
-    loadProfileData();
-  }, [loadProfileData]);
+    if (profileData) {
+      setUserName(profileData.username || '');
+      setUserID(profileData.accountname || '');
+      setOriginalAccountname(profileData.accountname || '');
+      setUserIntro(profileData.intro || '');
+      setUserImage(profileData.image || '');
+    }
+  }, [profileData]);
 
   // 사용자 이름 변경
   const handleUserNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -143,7 +131,7 @@ function ProfileEditContainer({ onValidityChange, onSubmitRef }: ProfileEditCont
     }
 
     try {
-      await updateProfile({
+      await updateProfileMutation.mutateAsync({
         user: {
           username: userName,
           accountname: userID,
@@ -155,7 +143,7 @@ function ProfileEditContainer({ onValidityChange, onSubmitRef }: ProfileEditCont
     } catch (error) {
       console.error('프로필 수정 실패:', error);
     }
-  }, [userName, userID, userIntro, userImage, isUserNameValid, isUserIDValid, updateProfile, navigate]);
+  }, [userName, userID, userIntro, userImage, isUserNameValid, isUserIDValid, updateProfileMutation, navigate]);
 
   // 부모 컴포넌트에 제출 함수 전달
   useEffect(() => {

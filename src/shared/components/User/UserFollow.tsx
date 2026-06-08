@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { MImage } from '../UserImage/UserImage';
 import { UserSection, UserName, UserId } from './UserSearch';
 import { ButtonShort } from '../button/Button';
 import { useLocation } from 'react-router-dom';
-import { useProfileAPI } from '../../../features/profile/useProfileApi';
 import { useRecoilValue } from 'recoil';
 import atomYourAccount from '../../../app/store/atomYourAccount';
 import accountNameAtom from '../../../app/store/accountName';
+import { useFollowListQuery } from '../../../features/profile/profileQueries';
 
 interface UserData {
   image: string;
@@ -25,38 +25,21 @@ const StyledFollower = styled.section`
 `;
 
 export default function UserFollow() {
-  const { getFollowData } = useProfileAPI();
   const myAccount = useRecoilValue(accountNameAtom);
   const yourAccount = useRecoilValue(atomYourAccount);
 
   const location = useLocation();
   const follower: FollowType = location.state?.value || 'follower';
   const userName = location.state?.yourData?.accountname || myAccount;
-  const [userData, setUserData] = useState<UserData[]>([]);
   const postListRef = useRef(null);
   const accountName = userName === myAccount ? myAccount : yourAccount;
-
-  const fetchData = useCallback(async () => {
-    if (!accountName) return;
-
-    await getFollowData(accountName, follower)
-      .then(response => {
-        if (response?.data) {
-          setUserData(response.data);
-        }
-      })
-      .catch(error => console.error(error));
-  }, [accountName, follower, getFollowData]);
-
-  useEffect(() => {
-    fetchData(); // 초기 데이터 로드
-  }, [fetchData]);
+  const { data: userData = [] } = useFollowListQuery(accountName, follower);
 
   return (
     <>
       <UserFollowWrapper ref={postListRef}>
         {userData.length > 0 &&
-          userData.map((data, index) => {
+          userData.map((data: UserData, index: number) => {
             return (
               <StyledFollower key={index}>
                 <MImage backgroundUrl={data.image} />

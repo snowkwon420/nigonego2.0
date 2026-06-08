@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ReactComponent as BtnHeartF } from '../../assets/icons/BtnHeartF.svg';
-import { usePostApi } from '../../../features/post/usePostApi';
+import { useTogglePostHeartMutation } from '../../../features/post/postQueries';
 
 interface UserData {
   id: string;
@@ -15,7 +15,7 @@ interface HeartProps {
 export default function Heart({ userData }: HeartProps) {
   const [like, setLike] = useState<boolean>(userData.hearted);
   const [likeCount, setLikeCount] = useState<number>(userData.heartCount ?? 0);
-  const { postHeart, deleteHeart } = usePostApi();
+  const toggleHeartMutation = useTogglePostHeartMutation(userData.id);
 
   const getHeartCount = (response: any) =>
     response?.post?.heartCount ?? response?.data?.post?.heartCount;
@@ -34,9 +34,7 @@ export default function Heart({ userData }: HeartProps) {
     setLikeCount((count) => Math.max(0, count + (nextLike ? 1 : -1)));
 
     try {
-      const response = nextLike
-        ? await postHeart(userData.id)
-        : await deleteHeart(userData.id);
+      const response = await toggleHeartMutation.mutateAsync(nextLike);
       const serverHeartCount = getHeartCount(response);
 
       if (typeof serverHeartCount === 'number') {

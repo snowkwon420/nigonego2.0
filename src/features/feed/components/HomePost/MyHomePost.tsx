@@ -1,85 +1,23 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { usePostApi } from '../../../post/usePostApi';
 import UserSearch from '../../../../shared/components/User/UserSearch';
 import BtnComment from '../../../../shared/assets/image/BtnComment.svg';
 import Heart from '../../../../shared/components/Heart/Heart';
 import { isValidImageUrl, resolveImageUrl } from '../../../../shared/utils/image';
+import { useUserPostsQuery } from '../../../post/postQueries';
+import { Post } from '../../../../shared/types';
 
 interface MyHomePostProps {
   accountName: string;
 }
 
-interface Author {
-  _id: string;
-  username: string;
-  accountname: string;
-  intro: string;
-  image: string;
-  following: string[];
-  follower: string[];
-  followerCount: number;
-  followingCount: number;
-}
-
-interface UserData {
-  id: string;
-  content: string;
-  image: string;
-  commentCount: number;
-  heartCount?: number;
-  author: Author;
-  hearted: boolean;
-}
-
 export default function MyHomePost({ accountName }: MyHomePostProps) {
-  const { getPostListLimit } = usePostApi();
-  const [userData, setUserData] = useState<UserData[]>([]);
-  const postListRef = useRef<HTMLDivElement>(null);
-
-  const fetchData = useCallback(async () => {
-    try {
-      const res = await getPostListLimit(accountName);
-      if (res?.data?.post) {
-        setUserData(prevData => [...prevData, ...res.data.post]);
-      } else if (res?.post) {
-        setUserData(prevData => [...prevData, ...res.post]);
-      }
-    } catch (error) {
-      // 에러 처리
-    }
-  }, [accountName, getPostListLimit]);
-
-  useEffect(() => {
-    fetchData(); // 초기 데이터 로드
-  }, [fetchData]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const container = postListRef.current;
-      if (container) {
-        const { scrollTop, clientHeight, scrollHeight } = container;
-        if (scrollTop + clientHeight >= scrollHeight) {
-          fetchData();
-        }
-      }
-    };
-    const postList = postListRef.current;
-    if (postList) {
-      postList.addEventListener('scroll', handleScroll);
-    }
-
-    return () => {
-      if (postList) {
-        postList.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, [fetchData, userData]);
+  const { data: userData = [] } = useUserPostsQuery(accountName);
 
   return (
-    <MyHomePostwarpper ref={postListRef} className="myHomePost">
+    <MyHomePostwarpper className="myHomePost">
       {userData.length > 0 &&
-        userData.map((data, index) => {
+        userData.map((data: Post, index: number) => {
           const postImage = resolveImageUrl(data.image);
 
           return (

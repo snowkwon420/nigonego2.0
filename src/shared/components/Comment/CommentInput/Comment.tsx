@@ -1,7 +1,7 @@
 import { useState, FormEvent, ChangeEvent } from 'react';
 import styled from 'styled-components';
 import userDefaultImage from '../../../assets/images/basic-profile-img.png';
-import { useCommentAPI } from '../../../../features/comment/useCommentApi';
+import { useCreateCommentMutation } from '../../../../features/comment/commentQueries';
 
 export const CommentWrapper = styled.div<{ $disableBtn?: string }>`
   width: 100%;
@@ -43,40 +43,28 @@ export const CommentWrapper = styled.div<{ $disableBtn?: string }>`
 
 interface CommentInputProps {
   userId: string;
-  setRecentCommentData: (data: any) => void;
-  getComment: () => void;
 }
 
-export default function CommentInput({
-  userId,
-  setRecentCommentData,
-  getComment,
-}: CommentInputProps) {
+export default function CommentInput({ userId }: CommentInputProps) {
   const [comment, setComment] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { postComment } = useCommentAPI();
+  const createCommentMutation = useCreateCommentMutation(userId);
 
   const handleCommentChange = (event: ChangeEvent<HTMLInputElement>) => {
     setComment(event.target.value);
   };
 
-  const isBtnDisable = comment.trim() === '' || isSubmitting;
+  const isBtnDisable = comment.trim() === '' || createCommentMutation.isPending;
 
   const onhandlesubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (comment.trim() === '' || isSubmitting) return;
+    if (comment.trim() === '' || createCommentMutation.isPending) return;
 
-    setIsSubmitting(true);
     try {
-      const res = await postComment(userId, comment);
-      setRecentCommentData(res.data);
-      getComment();
+      await createCommentMutation.mutateAsync(comment);
       setComment('');
     } catch (error) {
       // 에러 처리
-    } finally {
-      setIsSubmitting(false);
     }
   };
 

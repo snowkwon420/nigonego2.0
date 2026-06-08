@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { isValidImageUrl, resolveImageUrl } from '../../../../shared/utils/image';
+import { Product } from '../../../../shared/types';
 
 const ProductListItem = styled.button`
   width: 100%;
@@ -28,25 +29,6 @@ const ProductListItem = styled.button`
     font-size: 12px;
   }
 `;
-
-interface Product {
-  id: string;
-  itemName: string;
-  price: number;
-  link: string;
-  itemImage: string;
-  author: {
-    _id: string;
-    username: string;
-    accountname: string;
-    intro: string;
-    image: string;
-    following: string[];
-    follower: string[];
-    followerCount: number;
-    followingCount: number;
-  };
-}
 
 interface ProductItemProps {
   userData: Product[];

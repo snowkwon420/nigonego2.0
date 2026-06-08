@@ -1,4 +1,4 @@
-import { useState, useEffect, MouseEvent, useCallback } from 'react';
+import { useState, MouseEvent } from 'react';
 import styled from 'styled-components';
 import MyHomePost from '../../feed/components/HomePost/MyHomePost';
 import Product from '../../product/components/Product/Product';
@@ -7,36 +7,13 @@ import BodyGlobal from '../../../app/styles/BodyGlobal';
 import { ReactComponent as BtnVertical } from '../../../shared/assets/image/BtnVertical.svg';
 import { ReactComponent as BtnGrid } from '../../../shared/assets/image/BtnGrid.svg';
 import HomePostGrid from '../../feed/components/HomePost/HomePostGrid';
-import { useProfileAPI } from '../useProfileApi';
-import { User } from '../../../shared/types';
+import { useMyProfileQuery } from '../profileQueries';
 
 function MyProfileContainer() {
   const [isClickedList, setIsClickedList] = useState(true);
   const [isClickedGrid, setIsClickedGrid] = useState(false);
-  const [userData, setUserData] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
-  const { getProfileData } = useProfileAPI();
-
-  const loadProfileData = useCallback(async () => {
-    try {
-      const response = await getProfileData();
-      if (response?.user) {
-        setUserData(response.user);
-      } else if (response?.data?.user) {
-        setUserData(response.data.user);
-      }
-    } catch (error) {
-      // 에러 처리
-    } finally {
-      setIsLoading(false);
-    }
-  }, [getProfileData]);
-
-  // 프로필 데이터 로드
-  useEffect(() => {
-    loadProfileData();
-  }, [loadProfileData]);
+  const { data: userData, isLoading, isError } = useMyProfileQuery();
 
   const accountName = userData?.accountname;
 
@@ -68,7 +45,7 @@ function MyProfileContainer() {
   }
 
   // 데이터가 없는 경우 에러 처리
-  if (!userData || !accountName) {
+  if (isError || !userData || !accountName) {
     return (
       <BodyGlobal>
         <ErrorMessage>프로필 데이터를 불러올 수 없습니다.</ErrorMessage>

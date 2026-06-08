@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import BodyGlobal from '../../../app/styles/BodyGlobal';
 import FileUploadInput from '../../../shared/components/Input/FileUploadInput';
 import UserProfileCircle from '../../../shared/components/User/UserProfileCircle';
-import { usePostApi } from '../usePostApi';
 import { useImageUpload } from '../../../shared/hooks/useImageUpload';
+import { useCreatePostMutation } from '../postQueries';
 
 interface PostUploadContainerProps {
   onValidityChange: (isValid: boolean) => void;
@@ -18,7 +18,7 @@ function PostUploadContainer({ onValidityChange, onSubmitRef }: PostUploadContai
   const [content, setContent] = useState('');
   const [image, setImage] = useState('');
 
-  const { postPostUpload } = usePostApi();
+  const createPostMutation = useCreatePostMutation();
   const { uploadImage } = useImageUpload();
 
   // 폼 유효성 검사 및 부모 컴포넌트에 전달
@@ -32,12 +32,12 @@ function PostUploadContainer({ onValidityChange, onSubmitRef }: PostUploadContai
     if (content.trim() === '' || image === '') return;
 
     try {
-      await postPostUpload(content, image);
+      await createPostMutation.mutateAsync({ content, image });
       navigate('/homefeed');
     } catch (error) {
       console.error('게시물 업로드 실패:', error);
     }
-  }, [content, image, postPostUpload, navigate]);
+  }, [content, image, createPostMutation, navigate]);
 
   // submit 함수를 부모에게 전달
   useEffect(() => {

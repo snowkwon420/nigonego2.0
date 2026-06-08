@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Input from '../../../shared/components/Input/Input';
 import FileUploadInput from '../../../shared/components/Input/FileUploadInput';
-import { useProductAPI } from '../useProductApi';
+import { useCreateProductMutation } from '../productQueries';
 
 function ProductUploadContainer() {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ function ProductUploadContainer() {
   const [itemImage, setItemImage] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const { postProductUpload } = useProductAPI();
+  const createProductMutation = useCreateProductMutation();
 
   // 폼 유효성 검사
   useEffect(() => {
@@ -58,7 +58,12 @@ function ProductUploadContainer() {
     if (!isFormValid) return;
 
     try {
-      await postProductUpload(itemName, parseInt(price), link, itemImage);
+      await createProductMutation.mutateAsync({
+        itemName,
+        price: parseInt(price, 10),
+        link,
+        itemImage,
+      });
       navigate('/myprofile');
     } catch (error) {
       console.error('Product upload error:', error);

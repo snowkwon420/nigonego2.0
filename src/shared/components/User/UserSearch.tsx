@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { MImage } from '../UserImage/UserImage';
 import { useNavigate } from 'react-router-dom';
-import { useProfileAPI } from '../../../features/profile/useProfileApi';
 
 interface Author {
   image: string;
@@ -18,19 +17,11 @@ interface UserSearchProps {
 
 export default function UserSearch({ data }: UserSearchProps) {
   const navigate = useNavigate();
-  const { getUserFeed } = useProfileAPI();
 
-  async function moveToYourProfile() {
-    try {
-      await getUserFeed(data.author.accountname);
-      navigate('/yourprofile', {
-        state: { data },
-      });
-    } catch (error) {
-      navigate('/yourprofile', {
-        state: { data },
-      });
-    }
+  function moveToYourProfile() {
+    navigate('/yourprofile', {
+      state: { data },
+    });
   }
 
   return (

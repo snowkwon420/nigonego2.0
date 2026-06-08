@@ -1,72 +1,36 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useRef } from 'react';
 import styled from 'styled-components';
 import HomePost from './HomePost/HomePost';
-import { useFeedAPI } from '../useFeedApi';
-import { Post } from '../../../shared/types';
-import { POSTS_PER_PAGE, SCROLL_THRESHOLD } from '../../../shared/constants/pagination';
+import { SCROLL_THRESHOLD } from '../../../shared/constants/pagination';
+import { useHomeFeedQuery } from '../feedQueries';
 
 /**
  * 팔로잉한 유저가 있을 때 게시물을 표시하는 컴포넌트
  */
 function HomeFeedWithPosts() {
-  const [userData, setUserData] = useState<Post[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const postListRef = useRef<HTMLDivElement>(null);
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useHomeFeedQuery();
 
-  const { getHomeFeed } = useFeedAPI();
+  const userData = data?.pages.flat() || [];
 
-  // 데이터 fetching 함수
-  const fetchData = useCallback(async (skip: number) => {
-    if (isLoading) return;
-
-    setIsLoading(true);
-    try {
-      const response = await getHomeFeed(POSTS_PER_PAGE, skip);
-
-      if (response?.posts) {
-        setUserData(prevData => [...prevData, ...response.posts]);
-      } else if (Array.isArray(response)) {
-        setUserData(prevData => [...prevData, ...response]);
+  const handleScroll = () => {
+    const container = postListRef.current;
+    if (container && hasNextPage && !isFetchingNextPage) {
+      const { scrollTop, clientHeight, scrollHeight } = container;
+      if (scrollTop + clientHeight >= scrollHeight - SCROLL_THRESHOLD) {
+        fetchNextPage();
       }
-    } catch (error) {
-      // 에러 발생 시 빈 상태 유지
-    } finally {
-      setIsLoading(false);
     }
-  }, [getHomeFeed, isLoading]);
-
-  // 초기 데이터 로드
-  useEffect(() => {
-    fetchData(0);
-  }, [fetchData]);
-
-  // 무한 스크롤 처리
-  useEffect(() => {
-    const handleScroll = () => {
-      const container = postListRef.current;
-      if (container && !isLoading) {
-        const { scrollTop, clientHeight, scrollHeight } = container;
-        if (scrollTop + clientHeight >= scrollHeight - SCROLL_THRESHOLD) {
-          const skip = userData.length;
-          fetchData(skip);
-        }
-      }
-    };
-
-    const postList = postListRef.current;
-    if (postList) {
-      postList.addEventListener('scroll', handleScroll);
-    }
-
-    return () => {
-      if (postList) {
-        postList.removeEventListener('scroll', handleScroll);
-      }
-    };
-  }, [userData, isLoading, fetchData]);
+  };
 
   return (
-    <PostListWrapper ref={postListRef}>
+    <PostListWrapper ref={postListRef} onScroll={handleScroll}>
       {isLoading && userData.length === 0 ? (
         <LoadingWrapper>
           <p>피드를 불러오는 중...</p>
@@ -76,7 +40,7 @@ function HomeFeedWithPosts() {
           {userData.map((data, index) => (
             <HomePost data={data} key={data.id || index} />
           ))}
-          {isLoading && (
+          {isFetchingNextPage && (
             <LoadingWrapper>
               <p>더 불러오는 중...</p>
             </LoadingWrapper>
