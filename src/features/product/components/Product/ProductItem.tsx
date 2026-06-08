@@ -1,0 +1,63 @@
+import React from 'react';
+import styled from 'styled-components';
+import { isValidImageUrl, resolveImageUrl } from '../../../../shared/utils/image';
+import { Product } from '../../../../shared/types';
+
+const ProductListItem = styled.button`
+  width: 100%;
+  text-align: left;
+
+  padding: 0;
+  margin: 0;
+  img {
+    width: 100%;
+    aspect-ratio: 140 / 90;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  h3 {
+    padding: 4px 0;
+    margin: 0;
+    font-weight: 400;
+    font-size: 14px;
+  }
+  p {
+    padding: 0;
+    margin: 0;
+    color: #f26e22;
+    font-weight: 800;
+    font-size: 12px;
+  }
+`;
+
+interface ProductItemProps {
+  userData: Product[];
+}
+
+function ProductItem({ userData }: ProductItemProps) {
+  return (
+    <>
+      {/* {console.log(userData)} */}
+      {userData.map((data, index) => {
+        return (
+          <ProductListItem key={index}>
+            {isValidImageUrl(resolveImageUrl(data.itemImage)) && (
+              <img
+                src={resolveImageUrl(data.itemImage)}
+                alt=""
+                onError={(event) => {
+                  event.currentTarget.style.display = 'none';
+                }}
+              />
+            )}
+            <div>
+              <h3>{data.itemName}</h3>
+              <p>{data.price}</p>
+            </div>
+          </ProductListItem>
+        );
+      })}
+    </>
+  );
+}
+export default ProductItem;

@@ -9,7 +9,7 @@
     "import/no-extraneous-dependencies": "off",
     "no-console": "off",
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "linebreak-style": 0
   }
   // "extends": ["airbnb", "plugin:prettier/recommended"],

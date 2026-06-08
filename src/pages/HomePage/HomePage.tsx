@@ -1,0 +1,43 @@
+
+import styled from 'styled-components';
+import Navbar from '../../shared/components/Navbar/Navbar';
+import { ButtonMiddle } from '../../shared/components/button/Button';
+import { ReactComponent as LogoColorImg } from '../../shared/assets/image/LogoColorImg.svg';
+import { useNavigate } from 'react-router-dom';
+
+function HomePage() {
+  return (
+    <>
+      {/* <HeaderMainNav content={'니고네고 피드'} /> */}
+      <HomeBlank />
+      <Navbar homeV={false} chatV={true} postV={true} profileV={true} />
+    </>
+  );
+}
+// localstorage.getItem으로 가져오기 token
+function HomeBlank() {
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate('/search'); // 넘어가고자 하는 페이지의 경로를 설정해주세요
+  };
+  return (
+    <ContentWrapper>
+      <LogoColorImg width="160px" height="160px" />
+      <p>유저를 검색해 팔로우 해보세요.</p>
+      {/* <ButtonMiddle h="44" content="검색" onClick={handleButtonClick} /> */}
+      <ButtonMiddle onClick={handleButtonClick}>검색</ButtonMiddle>
+    </ContentWrapper>
+  );
+}
+
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4.8rem;
+`;
+
+export default HomePage;
