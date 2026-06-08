@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { MImage } from '../UserImage/UserImage';
 import { UserSection, UserName, UserId } from './UserSearch';
@@ -15,6 +15,8 @@ interface UserData {
   intro: string;
 }
 
+type FollowType = 'follower' | 'following';
+
 const StyledFollower = styled.section`
   width: 100%;
   padding: 8px 20px;
@@ -28,16 +30,15 @@ export default function UserFollow() {
   const yourAccount = useRecoilValue(atomYourAccount);
 
   const location = useLocation();
-  const follower = location.state.value;
-  const userName = location.state.yourData.accountname;
+  const follower: FollowType = location.state?.value || 'follower';
+  const userName = location.state?.yourData?.accountname || myAccount;
   const [userData, setUserData] = useState<UserData[]>([]);
   const postListRef = useRef(null);
   const accountName = userName === myAccount ? myAccount : yourAccount;
-  useEffect(() => {
-    fetchData(); // 초기 데이터 로드
-  }, []);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
+    if (!accountName) return;
+
     await getFollowData(accountName, follower)
       .then(response => {
         if (response?.data) {
@@ -45,7 +46,11 @@ export default function UserFollow() {
         }
       })
       .catch(error => console.error(error));
-  };
+  }, [accountName, follower, getFollowData]);
+
+  useEffect(() => {
+    fetchData(); // 초기 데이터 로드
+  }, [fetchData]);
 
   return (
     <>

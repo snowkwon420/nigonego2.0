@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 import { authTokenAtom } from '../auth/store';
 import * as postAPI from './postApi';
@@ -5,7 +6,7 @@ import * as postAPI from './postApi';
 export const usePostApi = () => {
   const token = useRecoilValue(authTokenAtom);
 
-  return {
+  return useMemo(() => ({
     // 게시글 업로드
     postPostUpload: (content: string, image: string) =>
       postAPI.postPostUpload({ content, image }, token),
@@ -20,5 +21,5 @@ export const usePostApi = () => {
     // 좋아요 & 좋아요 취소
     postHeart: (postId: string) => postAPI.postHeart(postId, token),
     deleteHeart: (postId: string) => postAPI.deleteHeart(postId, token),
-  };
+  }), [token]);
 };

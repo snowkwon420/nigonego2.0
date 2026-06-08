@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import IconImagies from '../../../../shared/assets/image/IconImagies.svg';
+import { isValidImageUrl, resolveImageUrl } from '../../../../shared/utils/image';
 
 interface HomePostGridListItemProps {
   img: {
@@ -9,10 +10,20 @@ interface HomePostGridListItemProps {
 }
 
 export default function HomePostGridListItem({ img }: HomePostGridListItemProps) {
+  const postImage = resolveImageUrl(img.image);
+
   return (
     <GridItemImg>
       <IconImagiesBtn src={IconImagies} alt="imagies icon" />
-      <img src={img.image} alt="이미지" />
+      {isValidImageUrl(postImage) && (
+        <img
+          src={postImage}
+          alt="이미지"
+          onError={(event) => {
+            event.currentTarget.style.display = 'none';
+          }}
+        />
+      )}
     </GridItemImg>
   );
 }

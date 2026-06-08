@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import HomePostGridList from './HomePostGridList';
 import { usePostApi } from '../../../post/usePostApi';
+import { User } from '../../../../shared/types';
 
 interface HomePostGridProps {
   accountname: string;
@@ -11,7 +12,7 @@ interface YourProfileData {
   content: string;
   image: string;
   commentCount: number;
-  author: any;
+  author: User;
   hearted: boolean;
 }
 
@@ -21,13 +22,7 @@ export default function HomePostGrid({ accountname }: HomePostGridProps) {
 
   const { getPostListLimit } = usePostApi();
 
-  useEffect(() => {
-    if (accountname) {
-      loadPosts();
-    }
-  }, [accountname]);
-
-  const loadPosts = async () => {
+  const loadPosts = useCallback(async () => {
     try {
       const response = await getPostListLimit(accountname);
       if (response?.post) {
@@ -40,7 +35,13 @@ export default function HomePostGrid({ accountname }: HomePostGridProps) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [accountname, getPostListLimit]);
+
+  useEffect(() => {
+    if (accountname) {
+      loadPosts();
+    }
+  }, [accountname, loadPosts]);
 
   if (isLoading) {
     return <div style={{ textAlign: 'center', padding: '20px', color: '#767676' }}>로딩 중...</div>;

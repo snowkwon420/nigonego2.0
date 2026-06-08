@@ -1,6 +1,6 @@
 // Product.tsx
 
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import ProductItem from './ProductItem';
 import { useProductAPI } from '../../useProductApi';
@@ -24,7 +24,7 @@ const ProductWrapper = styled.div`
   }
 `;
 
-interface Product {
+interface ProductData {
   id: string;
   itemName: string;
   price: number;
@@ -49,13 +49,10 @@ interface ProductProps {
 
 export default function Product({ accountName }: ProductProps) {
   const { getProductListLimit } = useProductAPI();
-  const [userData, setUserData] = useState<Product[]>([]);
+  const [userData, setUserData] = useState<ProductData[]>([]);
   const productListRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    fetchData(0); // 초기 데이터 로드
-  }, []);
 
-  const fetchData = (skip: number) => {
+  const fetchData = useCallback((skip: number) => {
     getProductListLimit(skip, accountName)
       .then(response => {
         if (response?.data?.product) {
@@ -63,7 +60,11 @@ export default function Product({ accountName }: ProductProps) {
         }
       })
       .catch(error => console.error(error));
-  };
+  }, [accountName, getProductListLimit]);
+
+  useEffect(() => {
+    fetchData(0); // 초기 데이터 로드
+  }, [fetchData]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -87,7 +88,7 @@ export default function Product({ accountName }: ProductProps) {
         productList.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [userData]);
+  }, [fetchData, userData]);
   return (
     <ProductWrapper>
       <h2>판매 중인 상품</h2>

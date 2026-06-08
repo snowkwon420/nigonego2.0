@@ -54,6 +54,7 @@ function JoinContainer() {
   async function onhandlesubmit() {
     try {
       const res = await postJoin({ user: { email } });
+
       if (res?.message === '이미 가입된 이메일 주소 입니다.') {
         setIsEmailValid(false);
         setErrorMessageEM('*이미 가입된 이메일 주소입니다.');
@@ -65,9 +66,19 @@ function JoinContainer() {
           },
         });
       }
-    } catch (error) {
-      setIsEmailValid(false);
-      setErrorMessageEM('*이메일 확인 중 오류가 발생했습니다.');
+    } catch (error: any) {
+      console.error('이메일 검증 에러:', error);
+
+      // Axios 에러 응답 확인
+      const errorMessage = error?.response?.data?.message;
+
+      if (errorMessage === '이미 가입된 이메일 주소 입니다.') {
+        setIsEmailValid(false);
+        setErrorMessageEM('*이미 가입된 이메일 주소입니다.');
+      } else {
+        setIsEmailValid(false);
+        setErrorMessageEM('*이메일 확인 중 오류가 발생했습니다.');
+      }
     }
   }
 

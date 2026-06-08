@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 import { authTokenAtom } from '../auth/store';
 import * as productAPI from './productApi';
@@ -5,7 +6,7 @@ import * as productAPI from './productApi';
 export const useProductAPI = () => {
   const token = useRecoilValue(authTokenAtom);
 
-  return {
+  return useMemo(() => ({
     // 상품 리스트 조회
     getProductListLimit: (skip: number, accountname: string) =>
       productAPI.getProductListLimit(skip, accountname, token),
@@ -18,5 +19,5 @@ export const useProductAPI = () => {
       itemImage: string,
     ) =>
       productAPI.postProductUpload({ itemName, price, link, itemImage }, token),
-  };
+  }), [token]);
 };
