@@ -14,16 +14,10 @@ interface HeaderBasicNavProps {
 }
 
 export function HeaderBasicNav({ children, disabled, onClick }: HeaderBasicNavProps) {
-  //뒤로가기 구현
-  const navigate = useNavigate();
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   //주소가 postupload 일 때만 업로드 버튼 랜더링
   const pathName = window.location.pathname;
-  const isPostUpLoad = pathName == '/postupload';
-  const isProductUpLoad = pathName == '/product';
+  const isPostUpLoad = pathName === '/postupload';
+  const isProductUpLoad = pathName === '/product';
 
   // 뒤로가기 버튼 구현하기;
   return (

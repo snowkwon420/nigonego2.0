@@ -1,11 +1,9 @@
 
 import styled from 'styled-components';
-import { HeaderMainNav } from '../../shared/components/Header/Header';
 import Navbar from '../../shared/components/Navbar/Navbar';
 import { ButtonMiddle } from '../../shared/components/button/Button';
 import { ReactComponent as LogoColorImg } from '../../shared/assets/image/LogoColorImg.svg';
 import { useNavigate } from 'react-router-dom';
-import Layout from '../../app/styles/Layout';
 
 function HomePage() {
   return (
@@ -40,15 +38,6 @@ const ContentWrapper = styled.div`
   align-items: center;
   gap: 10px;
   margin-top: 4.8rem;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  img {
-    height: 100px;
-    width: 100px;
-  }
 `;
 
 export default HomePage;

@@ -5,6 +5,7 @@ import { usePostApi } from '../../../features/post/usePostApi';
 interface UserData {
   id: string;
   hearted: boolean;
+  heartCount?: number;
 }
 
 interface HeartProps {
@@ -13,32 +14,42 @@ interface HeartProps {
 
 export default function Heart({ userData }: HeartProps) {
   const [like, setLike] = useState<boolean>(userData.hearted);
-  const [likeCount, setLikeCount] = useState<number>(0);
+  const [likeCount, setLikeCount] = useState<number>(userData.heartCount ?? 0);
   const { postHeart, deleteHeart } = usePostApi();
 
-  const HeartCount = () => {
-    setLike(!like);
-  };
+  const getHeartCount = (response: any) =>
+    response?.post?.heartCount ?? response?.data?.post?.heartCount;
 
   useEffect(() => {
-    if (like) {
-      postHeart(userData.id).then(res => {
-        if (res?.data?.post?.heartCount !== undefined) {
-          setLikeCount(res.data.post.heartCount);
-        }
-      });
-      // postHeart(userId.id).then(res => console.log(res));
-    } else {
-      deleteHeart(userData.id).then(res => {
-        if (res?.data?.post?.heartCount !== undefined) {
-          setLikeCount(res.data.post.heartCount);
-        }
-      });
+    setLike(userData.hearted);
+    setLikeCount(userData.heartCount ?? 0);
+  }, [userData.hearted, userData.heartCount]);
+
+  const handleClickHeart = async () => {
+    const nextLike = !like;
+    const previousLike = like;
+    const previousLikeCount = likeCount;
+
+    setLike(nextLike);
+    setLikeCount((count) => Math.max(0, count + (nextLike ? 1 : -1)));
+
+    try {
+      const response = nextLike
+        ? await postHeart(userData.id)
+        : await deleteHeart(userData.id);
+      const serverHeartCount = getHeartCount(response);
+
+      if (typeof serverHeartCount === 'number') {
+        setLikeCount(serverHeartCount);
+      }
+    } catch (error) {
+      setLike(previousLike);
+      setLikeCount(previousLikeCount);
     }
-  }, [like]);
+  };
 
   return (
-    <button type="button" className="btn" onClick={HeartCount}>
+    <button type="button" className="btn" onClick={handleClickHeart}>
       <BtnHeartF
         fill={like ? '#EF4343' : '#fff'}
         stroke={like ? '#EF4343' : '#767676'}

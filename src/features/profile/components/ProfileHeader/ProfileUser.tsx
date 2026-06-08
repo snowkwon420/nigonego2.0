@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import accountNameAtom from '../../../../app/store/accountName';
+import { useNavigate } from 'react-router-dom';
+import { LImage } from '../../../../shared/components/UserImage/UserImage';
 
 const ProfileUserWrapper = styled.div`
   /* box-shadow: inset 0 0 10px blue; */
@@ -15,15 +14,21 @@ const ProfileUserWrapper = styled.div`
     margin-bottom: 100px;
   }
 
-  img {
-    border-radius: 50%;
-    width: 110px;
-    height: 110px;
-  }
 `;
-const FollowNumberWrapper = styled.div`
+const FollowNumberButton = styled.button`
   /* box-shadow: inset 0 0 10px purple; */
   padding: 20px 12px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+
+  h3 {
+    margin: 0;
+  }
+
+  small {
+    color: var(--basic-grey);
+  }
 `;
 
 interface UserProfile {
@@ -46,36 +51,48 @@ interface ProfileUserProps {
 }
 
 export default function ProfileUser({ userProfile }: ProfileUserProps) {
-  const [click, setClick] = useState();
-  const accountAtom = useRecoilValue(accountNameAtom);
-  console.log(userProfile);
-  console.log(accountAtom);
+  const navigate = useNavigate();
   const myData = userProfile.hasOwnProperty('author') ? userProfile : null;
+  const followerCount = myData
+    ? userProfile.author?.followerCount || 0
+    : userProfile.followerCount;
+  const followingCount = myData
+    ? userProfile.author?.followingCount || 0
+    : userProfile.followingCount;
+  const username = myData ? userProfile.author?.username || '' : userProfile.username;
+  const intro = myData ? userProfile.author?.intro || '' : userProfile.intro;
+
+  const handleClickFollow = (value: 'follower' | 'following') => {
+    navigate('/myfollowers', {
+      state: {
+        value,
+        yourData: userProfile,
+      },
+    });
+  };
 
   return (
     <ProfileUserWrapper>
-      <FollowNumberWrapper>
-        <h3>
-          {myData
-            ? userProfile.author?.followerCount || 0
-            : userProfile.followerCount}
-        </h3>
+      <FollowNumberButton
+        type="button"
+        onClick={() => handleClickFollow('follower')}
+      >
+        <h3>{followerCount}</h3>
         <small>followers</small>
-      </FollowNumberWrapper>
+      </FollowNumberButton>
       <div>
-        <img src={userProfile.image} alt="프로필사진" />
-        <h2>{myData ? userProfile.author?.username || '' : userProfile.username}</h2>
+        <LImage backgroundUrl={userProfile.image} />
+        <h2>{username}</h2>
         <small>{userProfile.accountname}</small>
-        <p>{myData ? userProfile.author?.intro || '' : userProfile.intro}</p>
+        <p>{intro}</p>
       </div>
-      <FollowNumberWrapper>
-        <h3>
-          {myData
-            ? userProfile.author?.followingCount || 0
-            : userProfile.followingCount}
-        </h3>
+      <FollowNumberButton
+        type="button"
+        onClick={() => handleClickFollow('following')}
+      >
+        <h3>{followingCount}</h3>
         <small>followings</small>
-      </FollowNumberWrapper>
+      </FollowNumberButton>
     </ProfileUserWrapper>
   );
 }

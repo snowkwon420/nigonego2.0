@@ -1,4 +1,4 @@
-import { useState, useEffect, MouseEvent } from 'react';
+import { useState, useEffect, MouseEvent, useCallback } from 'react';
 import styled from 'styled-components';
 import MyHomePost from '../../feed/components/HomePost/MyHomePost';
 import Product from '../../product/components/Product/Product';
@@ -8,21 +8,17 @@ import { ReactComponent as BtnVertical } from '../../../shared/assets/image/BtnV
 import { ReactComponent as BtnGrid } from '../../../shared/assets/image/BtnGrid.svg';
 import HomePostGrid from '../../feed/components/HomePost/HomePostGrid';
 import { useProfileAPI } from '../useProfileApi';
+import { User } from '../../../shared/types';
 
 function MyProfileContainer() {
   const [isClickedList, setIsClickedList] = useState(true);
   const [isClickedGrid, setIsClickedGrid] = useState(false);
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const { getProfileData } = useProfileAPI();
 
-  // 프로필 데이터 로드
-  useEffect(() => {
-    loadProfileData();
-  }, []);
-
-  const loadProfileData = async () => {
+  const loadProfileData = useCallback(async () => {
     try {
       const response = await getProfileData();
       if (response?.user) {
@@ -35,7 +31,12 @@ function MyProfileContainer() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [getProfileData]);
+
+  // 프로필 데이터 로드
+  useEffect(() => {
+    loadProfileData();
+  }, [loadProfileData]);
 
   const accountName = userData?.accountname;
 

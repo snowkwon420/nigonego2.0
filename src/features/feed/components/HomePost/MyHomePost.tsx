@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { usePostApi } from '../../../post/usePostApi';
 import UserSearch from '../../../../shared/components/User/UserSearch';
 import BtnComment from '../../../../shared/assets/image/BtnComment.svg';
 import Heart from '../../../../shared/components/Heart/Heart';
+import { isValidImageUrl, resolveImageUrl } from '../../../../shared/utils/image';
 
 interface MyHomePostProps {
   accountName: string;
@@ -26,6 +27,7 @@ interface UserData {
   content: string;
   image: string;
   commentCount: number;
+  heartCount?: number;
   author: Author;
   hearted: boolean;
 }
@@ -35,18 +37,7 @@ export default function MyHomePost({ accountName }: MyHomePostProps) {
   const [userData, setUserData] = useState<UserData[]>([]);
   const postListRef = useRef<HTMLDivElement>(null);
 
-  const [clickedHeart, setClickedHeart] = useState(Boolean(true));
-
-  function handleClickedHeart(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    e.preventDefault();
-    setClickedHeart(!clickedHeart);
-  }
-
-  useEffect(() => {
-    fetchData(); // 초기 데이터 로드
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const res = await getPostListLimit(accountName);
       if (res?.data?.post) {
@@ -57,7 +48,11 @@ export default function MyHomePost({ accountName }: MyHomePostProps) {
     } catch (error) {
       // 에러 처리
     }
-  };
+  }, [accountName, getPostListLimit]);
+
+  useEffect(() => {
+    fetchData(); // 초기 데이터 로드
+  }, [fetchData]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,19 +74,29 @@ export default function MyHomePost({ accountName }: MyHomePostProps) {
         postList.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [userData]);
+  }, [fetchData, userData]);
 
   return (
     <MyHomePostwarpper ref={postListRef} className="myHomePost">
       {userData.length > 0 &&
         userData.map((data, index) => {
+          const postImage = resolveImageUrl(data.image);
+
           return (
             <div className="post-item-wrapper" key={index}>
               <UserSearch data={{ author: data.author }} />
               <div className="container">
                 <p>{data.content}</p>
                 <div className="img-W">
-                  <HomePostImg src={data.image} />
+                  {isValidImageUrl(postImage) && (
+                    <HomePostImg
+                      src={postImage}
+                      alt=""
+                      onError={(event) => {
+                        event.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  )}
                 </div>
                 <div className="icon-wrapper">
                   <button type="button" className="btn">
@@ -123,6 +128,7 @@ const MyHomePostwarpper = styled.div`
   .icon-wrapper {
     margin: 10px 0;
     display: flex;
+    gap: 14px;
   }
 
   .container {
@@ -147,12 +153,19 @@ const MyHomePostwarpper = styled.div`
 
   .btn {
     border: none;
-    padding: 0 10px 0 0;
+    padding: 0;
     display: flex;
-    align-items_center;
+    align-items: center;
+    gap: 6px;
+    min-height: 28px;
+    color: var(--basic-grey);
+    font-size: 12px;
 
+    img,
     svg {
-      margin-right: 5px;
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
     }
   }
 `;

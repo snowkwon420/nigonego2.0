@@ -4,7 +4,6 @@ import Navbar from '../../shared/components/Navbar/Navbar';
 import ChatUserList from '../../features/chat/components/ChatUserList';
 import styled from 'styled-components';
 import BodyGlobal from '../../app/styles/BodyGlobal';
-import Layout from '../../app/styles/Layout';
 
 const CommonWrapper = styled.section``;
 

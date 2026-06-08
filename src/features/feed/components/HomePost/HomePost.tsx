@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import UserSearch from '../../../../shared/components/User/UserSearch';
 import BtnComment from '../../../../shared/assets/image/BtnComment.svg';
 import Heart from '../../../../shared/components/Heart/Heart';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import accountNameAtom from '../../../../app/store/accountName';
+import { isValidImageUrl, resolveImageUrl } from '../../../../shared/utils/image';
 
 interface Author {
   _id: string;
@@ -25,6 +26,7 @@ interface HomePostProps {
     content: string;
     image: string;
     commentCount: number;
+    heartCount?: number;
     author: Author;
     hearted: boolean;
   };
@@ -33,7 +35,8 @@ interface HomePostProps {
 export default function HomePost({ data }: HomePostProps) {
   const navigate = useNavigate();
   const postListRef = useRef(null);
-  const [userId, setUserId] = useRecoilState(accountNameAtom);
+  const setUserId = useSetRecoilState(accountNameAtom);
+  const postImage = resolveImageUrl(data.image);
 
   const postMainHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     navigate('/postmain', {
@@ -53,7 +56,7 @@ export default function HomePost({ data }: HomePostProps) {
 
   useEffect(() => {
     setUserId(data.author.accountname);
-  }, []);
+  }, [data.author.accountname, setUserId]);
 
   return (
     <HomePostwarpper ref={postListRef} className="HomePost">
@@ -62,7 +65,15 @@ export default function HomePost({ data }: HomePostProps) {
         <section className="container">
           <div onClick={postMainHandler}>
             <p>{data.content}</p>
-            <HomePostImg src={data.image} />
+            {isValidImageUrl(postImage) && (
+              <HomePostImg
+                src={postImage}
+                alt=""
+                onError={(event) => {
+                  event.currentTarget.style.display = 'none';
+                }}
+              />
+            )}
           </div>
           <div className="post-item-wrapper">
             <button type="button" className="btn" onClick={postMainHandlerBtn}>
@@ -105,16 +116,24 @@ const HomePostwarpper = styled.div`
   .post-item-wrapper {
     padding: 10px 0;
     display: flex;
+    gap: 14px;
   }
 
   .btn {
     border: none;
-    padding: 0 10px 0 0;
+    padding: 0;
     display: flex;
     align-items: center;
+    gap: 6px;
+    min-height: 28px;
+    color: var(--basic-grey);
+    font-size: 12px;
 
+    img,
     svg {
-      margin-right: 5px;
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
     }
   }
 `;

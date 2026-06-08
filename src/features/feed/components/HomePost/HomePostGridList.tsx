@@ -18,7 +18,7 @@ export default function HomePostGridList({
       {userPostData.map((item, index) => {
         return (
           <div key={index}>
-            <HomePostGridListItem img={{ image: item.image }} />;
+            <HomePostGridListItem img={{ image: item.image }} />
           </div>
         );
       })}

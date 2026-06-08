@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useRecoilValue } from 'recoil';
 import { authTokenAtom } from '../auth/store';
 import * as profileAPI from './profileApi';
@@ -5,7 +6,7 @@ import * as profileAPI from './profileApi';
 export const useProfileAPI = () => {
   const token = useRecoilValue(authTokenAtom);
 
-  return {
+  return useMemo(() => ({
     // 계정명 유효성 검사
     postJoinMemberValid: (data: { user: { accountname: string } }) =>
       profileAPI.postJoinMemberValid(data, token),
@@ -34,5 +35,5 @@ export const useProfileAPI = () => {
         image: string;
       };
     }) => profileAPI.updateProfile(data, token),
-  };
+  }), [token]);
 };

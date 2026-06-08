@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { isValidImageUrl, resolveImageUrl } from '../../../../shared/utils/image';
 
 const ProductListItem = styled.button`
   width: 100%;
@@ -58,7 +59,15 @@ function ProductItem({ userData }: ProductItemProps) {
       {userData.map((data, index) => {
         return (
           <ProductListItem key={index}>
-            <img src={data.itemImage} alt="" />
+            {isValidImageUrl(resolveImageUrl(data.itemImage)) && (
+              <img
+                src={resolveImageUrl(data.itemImage)}
+                alt=""
+                onError={(event) => {
+                  event.currentTarget.style.display = 'none';
+                }}
+              />
+            )}
             <div>
               <h3>{data.itemName}</h3>
               <p>{data.price}</p>
