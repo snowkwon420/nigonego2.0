@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
-import { useRecoilValue } from 'recoil';
-import { authTokenAtom } from '../auth/store';
 import * as profileAPI from './profileApi';
+import { useAuthStore } from '../../app/store/useAuthStore';
 
 export const useProfileAPI = () => {
-  const token = useRecoilValue(authTokenAtom);
+  const token = useAuthStore((state) => state.token);
 
   return useMemo(() => ({
     // 계정명 유효성 검사

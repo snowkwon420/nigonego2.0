@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { followingAtom } from '../../../app/store/atoms';
-import accountNameAtom from '../../../app/store/accountName';
-import { useResetRecoilState } from 'recoil';
-import authAtom from '../../../app/store/authToken';
+import { useAuthStore } from '../../../app/store/useAuthStore';
 
 export default function Modal() {
   const [isOpen, setIsOpen] = useState(true);
@@ -42,18 +39,14 @@ interface LogoutModalProps {
 }
 
 export function LogoutModal({ onClose }: LogoutModalProps) {
-  const resetAuth = useResetRecoilState(authAtom);
-  const resetAccount = useResetRecoilState(accountNameAtom);
-  const resetFollowing = useResetRecoilState(followingAtom);
+  const logout = useAuthStore((state) => state.logout);
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     console.log('로그아웃 완료');
     setIsOpen(false);
-    resetAuth();
-    resetAccount();
-    resetFollowing();
+    logout();
     navigate('/login');
   };
 

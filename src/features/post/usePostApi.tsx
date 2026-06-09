@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
-import { useRecoilValue } from 'recoil';
-import { authTokenAtom } from '../auth/store';
 import * as postAPI from './postApi';
+import { useAuthStore } from '../../app/store/useAuthStore';
 
 export const usePostApi = () => {
-  const token = useRecoilValue(authTokenAtom);
+  const token = useAuthStore((state) => state.token);
 
   return useMemo(() => ({
     // 게시글 업로드

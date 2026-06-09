@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import SplashPage from './SplashPage';
 import LoginMain from '../LoginMain/LoginMain';
-import authAtom from '../../app/store/authToken';
-import { useRecoilValue } from 'recoil';
 import HomeFeed from '../HomeFeed/HomeFeed';
-import accountNameAtom from '../../app/store/accountName';
+import { useAuthStore } from '../../app/store/useAuthStore';
 
 function StartSplash() {
   const [loading, setLoading] = useState(false);
-  const auth = useRecoilValue(authAtom);
-  const accountname = useRecoilValue(accountNameAtom);
+  const auth = useAuthStore((state) => state.token);
+  const accountname = useAuthStore((state) => state.accountName);
 
   useEffect(() => {
     if (window.location.pathname === '/') {

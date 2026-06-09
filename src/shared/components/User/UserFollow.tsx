@@ -5,9 +5,7 @@ import { UserSection, UserName, UserId } from './UserSearch';
 import { ButtonShort } from '../button/Button';
 import { useLocation } from 'react-router-dom';
 import { useProfileAPI } from '../../../features/profile/useProfileApi';
-import { useRecoilValue } from 'recoil';
-import atomYourAccount from '../../../app/store/atomYourAccount';
-import accountNameAtom from '../../../app/store/accountName';
+import { useAuthStore } from '../../../app/store/useAuthStore';
 
 interface UserData {
   image: string;
@@ -26,15 +24,15 @@ const StyledFollower = styled.section`
 
 export default function UserFollow() {
   const { getFollowData } = useProfileAPI();
-  const myAccount = useRecoilValue(accountNameAtom);
-  const yourAccount = useRecoilValue(atomYourAccount);
+  const myAccount = useAuthStore((state) => state.accountName);
+  const yourAccount = useAuthStore((state) => state.yourAccount);
 
   const location = useLocation();
   const follower: FollowType = location.state?.value || 'follower';
   const userName = location.state?.yourData?.accountname || myAccount;
   const [userData, setUserData] = useState<UserData[]>([]);
   const postListRef = useRef(null);
-  const accountName = userName === myAccount ? myAccount : yourAccount;
+  const accountName = userName || yourAccount || myAccount;
 
   const fetchData = useCallback(async () => {
     if (!accountName) return;
