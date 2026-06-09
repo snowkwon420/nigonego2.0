@@ -1,11 +1,10 @@
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
 import Input from '../../../shared/components/Input/Input';
-import { authTokenAtom, accountNameAtom } from '../store';
 import { ButtonLong } from '../../../shared/components/button/Button';
 import * as authAPI from '../authApi';
 import { FormWrapper } from '../../../pages/LoginPage/LoginPage';
+import { useAuthStore } from '../../../app/store/useAuthStore';
 import {
   validateEmail,
   validatePassword,
@@ -22,8 +21,7 @@ function LoginContainer() {
   const [loginErrMessage, setLoginErrMessage] = useState<string>('');
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
-  const setAuth = useSetRecoilState(authTokenAtom);
-  const setAccountname = useSetRecoilState(accountNameAtom);
+  const setAuth = useAuthStore((state) => state.setAuth);
   const navigate = useNavigate();
 
   // 이메일 검증
@@ -68,8 +66,7 @@ function LoginContainer() {
       const res = await authAPI.postLogin({ user: { email, password } });
       if (res?.user) {
         const { token, accountname } = res.user;
-        setAuth(token);
-        setAccountname(accountname);
+        setAuth(token, accountname);
         navigate('/homefeed');
       } else {
         setIsCorrect(false);

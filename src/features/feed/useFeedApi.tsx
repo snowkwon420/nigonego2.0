@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
-import { useRecoilValue } from 'recoil';
-import { authTokenAtom } from '../auth/store';
 import * as feedAPI from './feedApi';
+import { useAuthStore } from '../../app/store/useAuthStore';
 
 export const useFeedAPI = () => {
-  const token = useRecoilValue(authTokenAtom);
+  const token = useAuthStore((state) => state.token);
 
   return useMemo(() => ({
     getHomeFeed: (limit: number, skip: number) =>

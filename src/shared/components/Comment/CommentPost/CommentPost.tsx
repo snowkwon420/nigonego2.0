@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { XSImage } from '../../UserImage/UserImage';
 import { MoreIconButtonStyle } from '../../button/Button';
 import { useNavigate } from 'react-router-dom';
-import accountNameAtom from '../../../../app/store/accountName';
 import moreIcon from '../../../assets/icons/icon-more-vertical.png';
 import { CommentSlideModal } from '../../Modal/SlideModal';
+import { useAuthStore } from '../../../../app/store/useAuthStore';
 
 interface CommentAuthor {
   accountname: string;
@@ -26,19 +25,10 @@ interface CommentData {
 
 function CommentPost({ comment }: CommentData) {
   const navigate = useNavigate();
-  const accountname = useRecoilValue(accountNameAtom);
+  const accountname = useAuthStore((state) => state.accountName);
   const [isSlideOpen, setIsSlideOpen] = useState(false);
-  const [isMyComment, setIsMyComment] = useState(false);
+  const isMyComment = comment.author.accountname === accountname;
   // const [commentData, setCommentData] = useState([]);
-
-  useEffect(() => {
-    if (comment.author.accountname === accountname) {
-      setIsMyComment(true);
-    } else {
-      setIsMyComment(false);
-    }
-    console.log(isMyComment);
-  }, [accountname, comment.author.accountname, isMyComment]);
 
   useEffect(() => {
     setIsSlideOpen(false);

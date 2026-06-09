@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-filename-extension */
-import { RecoilRoot } from 'recoil';
 import Routing from '../router/Routing';
 import GlobalStyle from '../styles/globalstyle';
 import styled from 'styled-components';
@@ -7,10 +6,8 @@ import styled from 'styled-components';
 const RootLayout: React.FC = () => {
   return (
     <Wrap>
-      <RecoilRoot>
-        <GlobalStyle />
-        <Routing />
-      </RecoilRoot>
+      <GlobalStyle />
+      <Routing />
     </Wrap>
   );
 };

@@ -1,9 +1,8 @@
-import { useRecoilValue } from 'recoil';
-import { authTokenAtom } from './store';
 import * as authAPI from './authApi';
+import { useAuthStore } from '../../app/store/useAuthStore';
 
 export const useAuthAPI = () => {
-  const token = useRecoilValue(authTokenAtom);
+  const token = useAuthStore((state) => state.token);
 
   return {
     // 로그인 (token 불필요)

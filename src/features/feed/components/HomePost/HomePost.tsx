@@ -1,11 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import UserSearch from '../../../../shared/components/User/UserSearch';
 import BtnComment from '../../../../shared/assets/image/BtnComment.svg';
 import Heart from '../../../../shared/components/Heart/Heart';
-import { useSetRecoilState } from 'recoil';
-import accountNameAtom from '../../../../app/store/accountName';
 import { isValidImageUrl, resolveImageUrl } from '../../../../shared/utils/image';
 
 interface Author {
@@ -35,7 +33,6 @@ interface HomePostProps {
 export default function HomePost({ data }: HomePostProps) {
   const navigate = useNavigate();
   const postListRef = useRef(null);
-  const setUserId = useSetRecoilState(accountNameAtom);
   const postImage = resolveImageUrl(data.image);
 
   const postMainHandler = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -53,10 +50,6 @@ export default function HomePost({ data }: HomePostProps) {
       },
     });
   };
-
-  useEffect(() => {
-    setUserId(data.author.accountname);
-  }, [data.author.accountname, setUserId]);
 
   return (
     <HomePostwarpper ref={postListRef} className="HomePost">

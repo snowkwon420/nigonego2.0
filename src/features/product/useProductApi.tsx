@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
-import { useRecoilValue } from 'recoil';
-import { authTokenAtom } from '../auth/store';
 import * as productAPI from './productApi';
+import { useAuthStore } from '../../app/store/useAuthStore';
 
 export const useProductAPI = () => {
-  const token = useRecoilValue(authTokenAtom);
+  const token = useAuthStore((state) => state.token);
 
   return useMemo(() => ({
     // 상품 리스트 조회

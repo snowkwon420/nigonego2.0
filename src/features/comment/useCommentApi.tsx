@@ -1,10 +1,9 @@
 import { useMemo } from 'react';
-import { useRecoilValue } from 'recoil';
-import { authTokenAtom } from '../auth/store';
 import * as commentAPI from './commentApi';
+import { useAuthStore } from '../../app/store/useAuthStore';
 
 export const useCommentAPI = () => {
-  const token = useRecoilValue(authTokenAtom);
+  const token = useAuthStore((state) => state.token);
 
   return useMemo(() => ({
     // 댓글 목록 조회
